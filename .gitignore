@@ -1,0 +1,33 @@
+# dependency and other dirs
+venv
+virtualenv
+__pycache__/
+
+# logs and other files
+*.log
+*.csv
+
+# environment vars files
+*.env
+build.json
+
+
+# IDEs and OSX cache
+.idea
+.vscode
+.DS_Store
+
+
+# content caching
+tmp
+package-lock.json
+yarn.lock
+*.pyc
+
+# user defined
+test_snippets.*
+dbdata
+Dockerfile-build-and-push
+
+# jupyter files
+.ipynb_checkpoints
