@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  db:
+    image: "postgres:14"
+    container_name: "pg"
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./dbdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=papertrade_db
+      - POSTGRES_USER=papertrade
+      - POSTGRES_PASSWORD=paperpass
+    networks:
+      - main
+
+volumes:
+  dbdata:
+
+networks:
+  main:

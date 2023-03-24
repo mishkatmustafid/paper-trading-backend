@@ -1,0 +1,13 @@
+#!/bin/bash
+export PYTHONPATH=.
+
+# sleep 30
+
+# Run migrations before spinning up the app
+# alembic --config migrations/alembic.ini upgrade head <----
+
+# Seed initial data
+# python -m migrations.seed <----
+
+# Start up the server
+python -m app.start

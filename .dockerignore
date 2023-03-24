@@ -1,0 +1,14 @@
+# temps, virtualenv, IDE
+
+.circleci
+.vscode
+.idea
+tmp
+**pycache**
+venv
+env
+.mypy_cache
+
+# macOS specific
+
+.DS_Store
