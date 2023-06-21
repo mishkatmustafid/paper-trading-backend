@@ -1,27 +1,19 @@
 """Application server module"""
 
+import sys
 import uvicorn
-from fastapi import Depends, FastAPI
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.docs import get_redoc_html, get_swagger_ui_html
 from fastapi.openapi.utils import get_openapi
 from loguru import logger
 
 from app.core import settings
-
-# from app.auth.auth import get_apidoc_username
-from app.api import api_router
+from app.api.v1 import api_router
 
 app = FastAPI(title=settings.PROJECT_NAME)
 
 origins = ["*"]
-
-# origins = [
-#     "http://domainname.com",
-#     "https://domainname.com",
-#     "http://localhost",
-#     "http://localhost:8080",
-# ]
 
 app.add_middleware(
     CORSMiddleware,
@@ -64,20 +56,20 @@ if ENV in VALID_ENVS[:3]:
         }
 
     @app.get("/apidoc", include_in_schema=False)
-    async def get_swagger_documentation(username: str = Depends(get_apidoc_username)):
+    async def get_swagger_documentation():
         return get_swagger_ui_html(
             openapi_url="/openapi.json", title=settings.PROJECT_NAME
         )
 
-    # @app.get("/redoc", include_in_schema=False)
-    # async def get_redoc_documentation(username: str = Depends(get_apidoc_username)):
-    #     return get_redoc_html(openapi_url="/openapi.json", title=settings.PROJECT_NAME)
+    @app.get("/redoc", include_in_schema=False)
+    async def get_redoc_documentation():
+        return get_redoc_html(openapi_url="/openapi.json", title=settings.PROJECT_NAME)
 
-    # @app.get("/openapi.json", include_in_schema=False)
-    # async def openapi(username: str = Depends(get_apidoc_username)):
-    #     return get_openapi(
-    #         title=settings.PROJECT_NAME, version=settings.VERSION, routes=app.routes
-    #     )
+    @app.get("/openapi.json", include_in_schema=False)
+    async def openapi():
+        return get_openapi(
+            title=settings.PROJECT_NAME, version=settings.VERSION, routes=app.routes
+        )
 
 
 def init_server() -> None:

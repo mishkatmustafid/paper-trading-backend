@@ -4,7 +4,7 @@ Router modules import
 
 from fastapi import APIRouter
 
-from app.api import home
+from app.api.v1 import home
 
 api_router = APIRouter()
 
