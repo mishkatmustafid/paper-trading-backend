@@ -31,3 +31,4 @@ Dockerfile-build-and-push
 
 # jupyter files
 .ipynb_checkpoints
+notes.txt
