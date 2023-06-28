@@ -52,7 +52,7 @@ if ENV in VALID_ENVS[:3]:
     async def get_root():
         return {
             "status": True,
-            "message": "Welcome to the Tiger Trade API service. Authenticate to proceed further.",
+            "message": "Welcome to the Paper Trade API service. Authenticate to proceed further.",
         }
 
     @app.get("/apidoc", include_in_schema=False)
