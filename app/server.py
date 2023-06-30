@@ -81,7 +81,7 @@ def init_server() -> None:
     # Run the server
     uvicorn.run(
         "app.server:app",
-        host="127.0.0.0",
+        host="0.0.0.0",
         port=int(settings.PORT),
         reload=True,
     )
