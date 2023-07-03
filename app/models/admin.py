@@ -8,8 +8,8 @@ from sqlalchemy import Boolean, Column, Enum, Identity, Integer, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Session
 
-from app.models import Base
 from app.models.admin_level import AdminLevel
+from app.models.base import Base
 
 
 class AdminUser(Base):

@@ -4,18 +4,15 @@ to user signup, login, and update details.
 """
 
 from typing import Any
+
 from fastapi import APIRouter, Depends, Request, Response
 from fastapi.encoders import jsonable_encoder
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from loguru import logger
 from sqlalchemy.orm import Session
-from fastapi.security import HTTPBasic, HTTPBasicCredentials
-from app import crud
 
-from app.auth.auth import (
-    generate_token,
-    is_valid_user,
-    verify_gty,
-)
+from app import crud
+from app.auth.auth import generate_token, is_valid_user, verify_gty
 from app.auth.bearer import JWTBearer
 from app.db.session import db_connection
 from app.models.user import User

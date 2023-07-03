@@ -2,9 +2,10 @@
 
 import sys
 
-from alembic import context
 from loguru import logger
 from sqlalchemy import engine_from_config, pool
+
+from alembic import context
 
 sys.path = ["", ".."] + sys.path[1:]
 

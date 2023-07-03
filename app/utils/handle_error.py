@@ -13,8 +13,8 @@ from app.utils.exceptions import (
     CustomTransferError,
     DatabaseOperationError,
     InvalidUUIDError,
-    SQLAlchemyObjectNotFoundError,
     PaperTradeCustomError,
+    SQLAlchemyObjectNotFoundError,
 )
 
 # psycopg2.errors.NotNullViolation

@@ -1,6 +1,7 @@
 """Application server module"""
 
 import sys
+
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -8,8 +9,8 @@ from fastapi.openapi.docs import get_redoc_html, get_swagger_ui_html
 from fastapi.openapi.utils import get_openapi
 from loguru import logger
 
-from app.core import settings
 from app.api.v1 import api_router
+from app.core import settings
 
 app = FastAPI(title=settings.PROJECT_NAME)
 

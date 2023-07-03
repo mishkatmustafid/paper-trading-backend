@@ -4,7 +4,6 @@ from typing import Optional
 
 from alembic import command
 from alembic.config import Config
-
 from app.db.session import initialise
 
 

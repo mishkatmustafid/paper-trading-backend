@@ -1,22 +1,21 @@
 import secrets
 import time
 from datetime import datetime, timedelta
-from fastapi import Depends, HTTPException, status, Request
+from typing import Any, Dict, Optional, Type, TypeVar
+
+import jwt
+from fastapi import Depends, HTTPException, Request, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
-import jwt
-from loguru import logger
-from sqlalchemy.orm import Session
-from passlib.context import CryptContext
-from typing import Any, Dict, Optional, Type, TypeVar
 from jwt.exceptions import DecodeError, ExpiredSignatureError, InvalidTokenError
-
+from loguru import logger
+from passlib.context import CryptContext
+from sqlalchemy.orm import Session
 
 from app.core import settings
 from app.models.admin_level import AdminLevel
 from app.models.base import Base
 from app.models.user import User
-
 
 security = HTTPBasic()
 

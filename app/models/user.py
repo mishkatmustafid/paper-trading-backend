@@ -4,7 +4,7 @@ User models module
 
 import uuid
 
-from sqlalchemy import Enum, Integer, Column, Identity, String, Boolean
+from sqlalchemy import Boolean, Column, Enum, Identity, Integer, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Session
 
