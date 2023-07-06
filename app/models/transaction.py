@@ -8,7 +8,7 @@ from datetime import datetime
 
 from sqlalchemy import Column, DateTime, Enum, Float, ForeignKey, Identity, Integer
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import Session, relationship
 
 from app.models import Base
 from app.models.order_type import OrderType
@@ -58,3 +58,29 @@ class Transaction(Base):
 
     # Relationships
     # portfolio_stock = relationship("PortfolioStock", back_populates="transactions")
+
+    @classmethod
+    def get_by_transaction_id(cls, db: Session, transaction_id: int):
+        """
+        Gets transaction from database based on a given transaction id
+        """
+
+        return (
+            db.query(Transaction)
+            .where(Transaction.deleted_at == None)
+            .fitler(Transaction.transaction_id == transaction_id)
+            .first()
+        )
+
+    @classmethod
+    def get_by_portfolio_stock_id(cls, db: Session, portfolio_stock_id: str):
+        """
+        Gets all transaction from database based on a given portfolio stock id
+        """
+
+        return (
+            db.query(Transaction)
+            .where(Transaction.deleted_at == None)
+            .fitler(Transaction.portfolio_stock_id == portfolio_stock_id)
+            .all()
+        )
