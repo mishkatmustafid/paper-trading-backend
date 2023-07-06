@@ -1,8 +1,8 @@
 """
 Market Data Historical models module
 """
-import uuid
 import enum
+import uuid
 
 from sqlalchemy import Column, Date, Enum, Float, Identity, Integer, String
 from sqlalchemy.dialects.postgresql import UUID

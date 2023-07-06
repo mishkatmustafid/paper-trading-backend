@@ -4,6 +4,7 @@ Portfolio CRUD operations
 
 from datetime import datetime
 from typing import Any, Dict, Union
+
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from sqlalchemy.orm import Session

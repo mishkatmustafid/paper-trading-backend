@@ -4,27 +4,28 @@ to portfolio stock create, read, update and delete.
 """
 
 from typing import Any, Optional
+
 from fastapi import APIRouter, Depends, Response
 from fastapi.encoders import jsonable_encoder
-from sqlalchemy.orm import Session
 from loguru import logger
+from sqlalchemy.orm import Session
 
 from app import crud
+from app.auth.bearer import JWTBearer
 from app.db.session import db_connection
 from app.schemas import (
     CreatePortfolioStock,
     CreatePortfolioStockResponse,
+    DeletePortfolioStock,
+    DeletePortfolioStockResponse,
     GetPortfolioStockResponse,
     UpdatePortfolioStock,
     UpdatePortfolioStockResponse,
-    DeletePortfolioStock,
-    DeletePortfolioStockResponse,
 )
 from app.utils.exceptions import InvalidUUIDError
-from app.utils.uuid_validation import is_valid_uuid
-from app.auth.bearer import JWTBearer
 from app.utils.general import General
 from app.utils.handle_error import handle_error
+from app.utils.uuid_validation import is_valid_uuid
 
 router = APIRouter()
 
