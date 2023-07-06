@@ -40,7 +40,7 @@ class Portfolio(Base):
     name: str = Column(String(50), nullable=False)
 
     @classmethod
-    def get_portfolio_by_id(cls, db: Session, primary_id: int):
+    def get_by_portfolio_id(cls, db: Session, portfolio_id: str):
         """
         Gets portfolio from database based on a given portfolio id.
         """
@@ -48,12 +48,12 @@ class Portfolio(Base):
         return (
             db.query(Portfolio)
             .where(Portfolio.deleted_at == None)
-            .filter(Portfolio.id == primary_id)
+            .filter(Portfolio.portfolio_id == portfolio_id)
             .first()
         )
 
     @classmethod
-    def get_portfolio_by_user_id(cls, user_id: int, db: Session):
+    def get_portfolio_by_user_id(cls, db: Session, user_id: int):
         """
         Gets all portfolio from database based on a given user id.
         """
