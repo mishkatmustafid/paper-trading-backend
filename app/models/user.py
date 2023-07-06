@@ -42,20 +42,7 @@ class User(Base):
     profile_status = Column(Enum(ProfileStatus), nullable=True)
 
     @classmethod
-    def get_by_id(cls, db: Session, primary_id: int):
-        """
-        Gets user from database based on the given id.
-        """
-
-        return (
-            db.query(User)
-            .where(User.deleted_at == None)
-            .filter(User.id == primary_id)
-            .first()
-        )
-
-    @classmethod
-    def get_by_userid(cls, db: Session, user_id: str):
+    def get_by_user_id(cls, db: Session, user_id: str):
         """
         Gets user from database based on the given user id.
         """

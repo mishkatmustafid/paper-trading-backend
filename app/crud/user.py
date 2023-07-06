@@ -33,12 +33,8 @@ class CRUDUser(BaseModel):
         return db_object
 
     @staticmethod
-    def get_by_id(db: Session, pid: int):
-        return User.get_by_id(db, pid)
-
-    @staticmethod
-    def get_by_userid(db: Session, user_id: str):
-        return User.get_by_userid(db, user_id)
+    def get_by_user_id(db: Session, user_id: str):
+        return User.get_by_user_id(db, user_id)
 
     @staticmethod
     def get_by_email(db: Session, email: str):
@@ -62,7 +58,7 @@ class CRUDUser(BaseModel):
         """
 
         # retrieve details of the given user id and
-        user_details = self.get_by_userid(db, user_id)
+        user_details = self.get_by_user_id(db, user_id)
 
         if user_details:
             obj_data = jsonable_encoder(user_details)

@@ -58,7 +58,7 @@ class AdminUser(Base):
         )
 
     @classmethod
-    def get_by_userid(cls, db: Session, user_id: str):
+    def get_by_user_id(cls, db: Session, user_id: str):
         """
         Gets admin user from database based on the given user id.
         """

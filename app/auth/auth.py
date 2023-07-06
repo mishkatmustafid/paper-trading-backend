@@ -201,7 +201,7 @@ def verify_gty(
         decoded_token = decode_jwt(access_token)
 
         decoded_token = decoded_token["gty"].partition(":")
-        user = jsonable_encoder(model.get_by_userid(db, user_id))
+        user = jsonable_encoder(model.get_by_user_id(db, user_id))
 
         if user is None:
             return jsonable_encoder({"status": False, "error": "not_found"})
