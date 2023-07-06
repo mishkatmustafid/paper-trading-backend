@@ -6,10 +6,11 @@ from fastapi import APIRouter
 
 from app.api.v1 import (
     home,
-    user,
+    market_data_historical,
     portfolio,
     portfolio_stock,
     transaction,
+    user,
 )
 
 api_router = APIRouter()
@@ -23,4 +24,9 @@ api_router.include_router(
 )
 api_router.include_router(
     portfolio_stock.router, prefix="/portfolio_stock", tags=["portfoliostocks"]
+)
+api_router.include_router(
+    market_data_historical.router,
+    prefix="/marketdata",
+    tags=["marketdatahistorical"],
 )
