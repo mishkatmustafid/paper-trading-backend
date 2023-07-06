@@ -47,7 +47,9 @@ class PortfolioStock(Base):
         nullable=False,
     )
     quantity: int = Column(Integer, nullable=False)
-    purchase_date: datetime = Column(DateTime, default=datetime.utcnow, nullable=False)
+    purchase_date: datetime = Column(
+        DateTime, default=datetime.utcnow, server_default="now()", nullable=False
+    )
     purchase_price: Numeric = Column(Numeric(10, 2), nullable=False)
     average_purchase_price: Numeric = Column(Numeric(10, 2), nullable=False)
     total_quantity: int = Column(Integer, nullable=False)
