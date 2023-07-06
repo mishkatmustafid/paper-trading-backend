@@ -8,6 +8,9 @@ from typing import Any, Optional
 
 from pydantic import BaseModel, Field
 
+from app.models.order_type import OrderType
+from app.models.transaction_type import TransactionType
+
 
 class TransactionBase(BaseModel):
     """
@@ -16,11 +19,11 @@ class TransactionBase(BaseModel):
 
     transaction_id: Optional[str] = None
     portfolio_stock_id: Optional[str] = None
-    transaction_type: Optional[str] = None
+    transaction_type: Optional[TransactionType] = None
     transaction_date: Optional[str] = None
     transaction_price: Optional[str] = None
     quantity: Optional[str] = None
-    order_type: Optional[str] = None
+    order_type: Optional[OrderType] = None
     limit_price: Optional[str] = None
     transaction_value: Optional[str] = None
     realized_profit_loss: Optional[str] = None
@@ -63,11 +66,11 @@ class CreateTransaction(TransactionBase):
     """
 
     portfolio_stock_id: str = Field(...)
-    transaction_type: enum = Field(...)
+    transaction_type: TransactionType = Field(...)
     transaction_date: datetime = Field(...)
     transaction_price: float = Field(...)
     quantity: int = Field(...)
-    order_type: enum = Field(...)
+    order_type: OrderType = Field(...)
     limit_price: Optional[float] = None
     transaction_value: float = Field(...)
     realized_profit_loss: float = Field(...)
@@ -118,11 +121,11 @@ class UpdateTransaction(TransactionBase):
 
     transaction_id: str = Field(...)
     portfolio_stock_id: Optional[str] = None
-    transaction_type: Optional[str] = None
+    transaction_type: Optional[TransactionType] = None
     transaction_date: Optional[str] = None
     transaction_price: Optional[str] = None
     quantity: Optional[str] = None
-    order_type: Optional[str] = None
+    order_type: Optional[OrderType] = None
     limit_price: Optional[str] = None
     transaction_value: Optional[str] = None
     realized_profit_loss: Optional[str] = None
