@@ -7,7 +7,6 @@ from typing import Any
 
 from fastapi import APIRouter, Depends, Request, Response
 from fastapi.encoders import jsonable_encoder
-from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from loguru import logger
 from sqlalchemy.orm import Session
 
@@ -30,10 +29,10 @@ from app.utils.exceptions import (
     InvalidUUIDError,
     SQLAlchemyObjectNotFoundError,
 )
+from app.utils.general import General
 from app.utils.uuid_validation import is_valid_uuid
 
 router = APIRouter()
-security = HTTPBasic()
 
 
 @router.post(
@@ -145,17 +144,11 @@ async def get_user_details(
                 status_code=400,
             )
 
-        user_details = jsonable_encoder(verify_gty(db, request, User, user_id))
+        user_details = General.exclude_metadata(
+            jsonable_encoder(verify_gty(db, request, User, user_id))
+        )
 
         if user_details["status"]:
-            # TODO: remove unimportant fields and use
-            # schema dump to return necessary fields as a response
-            # > Removes optional fields from the updated object.
-            #   user_details.pop("password", None)
-            #   user_details.pop("created_at", None)
-            #   user_details.pop("updated_at", None)
-            #   user_details.pop("deleted_at", None)
-
             return {
                 "status": True,
                 "message": "User details found",
