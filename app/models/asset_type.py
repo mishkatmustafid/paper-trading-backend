@@ -11,5 +11,6 @@ class AssetType(Enum):
     Enum class for asset types (stock/cryptocurrency)
     """
 
-    STOCK = "stock"
+    NYSE = "nyse"
+    LSE = "lse"
     CRYPTOCURRENCY = "cryptocurrency"

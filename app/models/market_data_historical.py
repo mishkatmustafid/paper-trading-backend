@@ -2,12 +2,14 @@
 Market Data Historical models module
 """
 import uuid
+import enum
 
-from sqlalchemy import Column, Date, Float, Identity, Integer, String
+from sqlalchemy import Column, Date, Enum, Float, Identity, Integer, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Session
 
 from app.models import Base
+from app.models.asset_type import AssetType
 
 
 class MarketDataHistorical(Base):
@@ -36,6 +38,7 @@ class MarketDataHistorical(Base):
     )
     date = Column(Date, nullable=False)
     name: str = Column(String(50), nullable=False)
+    asset_type: enum = Column(Enum(AssetType), nullable=False)
     symbol: str = Column(String(50), nullable=False, index=True)
     open: float = Column(Float, nullable=False)
     high: float = Column(Float, nullable=False)
