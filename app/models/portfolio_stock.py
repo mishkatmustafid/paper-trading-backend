@@ -2,15 +2,14 @@
 Portfolio Stock models module
 """
 
-import enum
 import uuid
+from datetime import datetime
 
-from sqlalchemy import Column, Enum, ForeignKey, Identity, Integer, Numeric, String
+from sqlalchemy import Column, DateTime, ForeignKey, Identity, Integer, Numeric, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Session, relationship
 
 from app.models import Base
-from app.models.asset_type import AssetType
 
 
 class PortfolioStock(Base):
@@ -42,10 +41,13 @@ class PortfolioStock(Base):
         UUID(as_uuid=True), ForeignKey("portfolio.portfolio_id"), nullable=False
     )
 
-    asset_id: str = Column(UUID(as_uuid=True), nullable=False)
-    asset_type: enum = Column(Enum(AssetType), nullable=False)
+    asset_id: str = Column(
+        UUID(as_uuid=True),
+        ForeignKey("market_data_historical.market_data_historical_id"),
+        nullable=False,
+    )
     quantity: int = Column(Integer, nullable=False)
-    purchase_date: str = Column(String, nullable=False)
+    purchase_date: datetime = Column(DateTime, default=datetime.utcnow, nullable=False)
     purchase_price: Numeric = Column(Numeric(10, 2), nullable=False)
     average_purchase_price: Numeric = Column(Numeric(10, 2), nullable=False)
     total_quantity: int = Column(Integer, nullable=False)
@@ -55,7 +57,7 @@ class PortfolioStock(Base):
     # portfolio = relationship("Portfolio", back_populates="portfolio_stocks")
 
     @classmethod
-    def get_portfolio_stock_by_id(cls, db: Session, primary_id: int):
+    def get_by_portfolio_stock_id(cls, db: Session, portfolio_stock_id: int):
         """
         Gets portfolio stock from database based on a given portfolio id.
         """
@@ -63,14 +65,14 @@ class PortfolioStock(Base):
         return (
             db.query(PortfolioStock)
             .where(PortfolioStock.deleted_at == None)
-            .filter(PortfolioStock.id == primary_id)
+            .filter(PortfolioStock.portfolio_stock_id == portfolio_stock_id)
             .first()
         )
 
     @classmethod
-    def get_portfolio_by_portfolio_id(cls, portfolio_id: int, db: Session):
+    def get_by_portfolio_id(cls, db: Session, portfolio_id: int):
         """
-        Gets all portfolio from database based on a given user id.
+        Gets all portfolio from database based on a given portfolio id.
         """
 
         return (
