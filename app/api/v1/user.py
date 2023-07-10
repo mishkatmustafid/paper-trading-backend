@@ -93,7 +93,9 @@ async def signin(
 
         if valid_user["status"]:
             access_token = generate_token(payload)
-            user_details = jsonable_encoder(crud.user.get_by_email(db, email))
+            user_details = General.exclude_metadata(
+                jsonable_encoder(crud.user.get_by_email(db, email))
+            )
 
             return {
                 "status": True,

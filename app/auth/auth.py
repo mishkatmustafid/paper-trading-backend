@@ -137,7 +137,7 @@ def encode_jwt(username: str, password: str) -> str:
 
     access_token = jwt.encode(
         payload, settings.SIGNING_KEY, algorithm=settings.SIGNING_ALGORITHM
-    ).decode("utf-8")
+    )
 
     return access_token
 
