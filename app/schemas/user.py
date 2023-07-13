@@ -102,7 +102,7 @@ class SignInUserResponse(BaseModel):
                 "status": True,
                 "message": "Successfully signed in!",
                 "details": {
-                    "user_id": 1,
+                    "user_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpcMdcpiJsb2NhbGhvc3QiLCJpYXQiOjE2MzYwMTUwNzgsImV4cCI6MTYzNjAxNjg3OCwiYXVkIjoiZW1haWxAc2h1bW9uLm1lIn0.0slVFU_INXv13X4yQAvW1VCNJI6XUu5qOP6aPXD03VM",
                 },
             }

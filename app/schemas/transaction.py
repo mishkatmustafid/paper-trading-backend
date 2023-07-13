@@ -2,7 +2,6 @@
 Transaction schema module
 """
 
-import enum
 from datetime import datetime
 from typing import Any, Optional
 
@@ -48,7 +47,7 @@ class GetTransactionResponse(TransactionResponseBase):
                     "transaction_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "transaction_type": "buy",
-                    "transaction_date": "2023-01-01",
+                    "transaction_date": "2023-07-12T15:30:00",
                     "transaction_price": "23.5",
                     "quantity": "10",
                     "order_type": "market",
@@ -80,7 +79,7 @@ class CreateTransaction(TransactionBase):
             "example": {
                 "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                 "transaction_type": "buy",
-                "transaction_date": "2023-01-01",
+                "transaction_date": "2023-07-12T15:30:00",
                 "transaction_price": "23.5",
                 "quantity": "10",
                 "order_type": "market",
@@ -102,7 +101,7 @@ class CreateTransactionResponse(TransactionResponseBase):
                 "details": {
                     "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "transaction_type": "buy",
-                    "transaction_date": "2023-01-01",
+                    "transaction_date": "2023-07-12T15:30:00",
                     "transaction_price": "23.5",
                     "quantity": "10",
                     "order_type": "market",
@@ -136,7 +135,7 @@ class UpdateTransaction(TransactionBase):
                 "transaction_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                 "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                 "transaction_type": "buy",
-                "transaction_date": "2023-01-01",
+                "transaction_date": "2023-07-12T15:30:00",
                 "transaction_price": "23.5",
                 "quantity": "10",
                 "order_type": "market",
@@ -159,7 +158,7 @@ class UpdateTransactionResponse(TransactionResponseBase):
                     "transaction_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "transaction_type": "buy",
-                    "transaction_date": "2023-01-01",
+                    "transaction_date": "2023-07-12T15:30:00",
                     "transaction_price": "23.5",
                     "quantity": "10",
                     "order_type": "market",
