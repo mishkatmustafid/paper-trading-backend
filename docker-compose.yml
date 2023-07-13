@@ -8,12 +8,25 @@ services:
       - "5434:5432"
     volumes:
       - ./dbdata:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=papertrade_db
-      - POSTGRES_USER=papertrade
-      - POSTGRES_PASSWORD=paperpass
+    env_file:
+      - ./pt-dc.env
     networks:
       - main
+
+  api:
+    image: "papertrade:latest"
+    build: .
+    container_name: "pt"
+    ports:
+      - "9000:9000"
+    env_file:
+      - ./pt-dc.env
+    networks:
+      - main
+    depends_on:
+      - db
+    command: ["./start"]
+    restart: on-failure
 
 volumes:
   dbdata:
