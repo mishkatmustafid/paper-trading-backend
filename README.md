@@ -1,5 +1,8 @@
 # Paper Trading Backend
 
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![pylint](https://img.shields.io/badge/Pylint-enabled-brightgreen)](https://pylint.org/)
+
 Backend application service for Paper Trading website. This service provides backend functionality of the project.
 
 ## Installation
@@ -22,21 +25,36 @@ Following tech stacks are required to get the local env up and running.
 
 Once above stacks are installed and ready; execute the following commands from the root of the project.
 
-Start the postgres app and create a database called `papertrade_db` from the UI. Execute following commands from the root of the project.
+Choose one of the following options to run the application
 
-```sh
-# to create and enable virtual env for the project.
-$ pipenv shell
+- **Option 1:** Start the postgres app and create a database called `papertrade_db` from the UI. Execute following commands from the root of the project.
 
-# install dependencies
-$ pipenv install
+  ```sh
+  # to create and enable virtual env for the project.
+  $ pipenv shell
 
-# make start script executable
-$ chmod +x start
+  # install dependencies
+  $ pipenv install
 
-# start the project
-./start
-```
+  # make start script executable
+  $ chmod +x start
+
+  # start the project
+  ./start
+  ```
+
+- **Option 2:** Run a docker container using compose file.
+
+  ```sh
+  # To start the DB engine in a daemon mode
+  $ docker-compose up -d
+
+  # To stop the DB engine
+  $ docker-compose down
+
+  # To stop the DB engine and remove the data volumes:
+  $ docker-compose down -v
+  ```
 
 Once service is up and running successfully hover over the following url for the API documentation:
 [localhost:9000/docs](http://127.0.0.1:9000/docs)
@@ -55,3 +73,18 @@ $ alembic --config migrations/alembic.ini revision --autogenerate -m "<commit_me
 $ alembic --config migrations/alembic.ini upgrade head
 
 ```
+
+## Tests
+
+**TODO:**
+
+- Add tests for api endpoints
+- Add jobs in `.gitlab-ci.yml` for running tests
+
+## Deployment
+
+This section describes the pipeline automation of the project
+
+### CI/CD
+
+This application uses GitlabCI for continuous integration and delivery.
