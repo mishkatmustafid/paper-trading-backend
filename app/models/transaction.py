@@ -48,7 +48,9 @@ class Transaction(Base):
     )
 
     transaction_type: enum = Column(Enum(TransactionType), nullable=False)
-    transaction_date = Column(DateTime, default=datetime.utcnow, nullable=False)
+    transaction_date: datetime = Column(
+        DateTime, default=datetime.utcnow, nullable=False
+    )
     transaction_price: float = Column(Float, nullable=False)
     quantity: int = Column(Integer, nullable=False)
     order_type: enum = Column(Enum(OrderType), nullable=False)
@@ -60,7 +62,7 @@ class Transaction(Base):
     # portfolio_stock = relationship("PortfolioStock", back_populates="transactions")
 
     @classmethod
-    def get_by_transaction_id(cls, db: Session, transaction_id: int):
+    def get_by_transaction_id(cls, db: Session, transaction_id: str):
         """
         Gets transaction from database based on a given transaction id
         """

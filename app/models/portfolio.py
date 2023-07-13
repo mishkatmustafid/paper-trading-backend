@@ -53,7 +53,7 @@ class Portfolio(Base):
         )
 
     @classmethod
-    def get_portfolio_by_user_id(cls, db: Session, user_id: int):
+    def get_portfolio_by_user_id(cls, db: Session, user_id: str):
         """
         Gets all portfolio from database based on a given user id.
         """

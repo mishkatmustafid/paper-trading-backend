@@ -47,14 +47,47 @@ class MarketDataHistorical(Base):
     volume: int = Column(Integer, nullable=False)
 
     @classmethod
-    def get_market_data_historical_by_symbol(cls, symbol: str, db: Session):
+    def get_market_data_historical_by_market_data_historical_id(
+        cls, db: Session, market_data_historical_id: str
+    ):
+        return (
+            db.query(MarketDataHistorical)
+            .where(MarketDataHistorical.deleted_at == None)
+            .filter(
+                MarketDataHistorical.market_data_historical_id
+                == market_data_historical_id
+            )
+            .first()
+        )
+
+    @classmethod
+    def get_market_data_historical_by_symbol(
+        cls, db: Session, symbol: str, asset_type: AssetType
+    ):
         """
-        Gets all historical market data from database based on given symbol.
+        Gets all historical market data from database based on given symbol and asset type.
         """
 
         return (
             db.query(MarketDataHistorical)
             .where(MarketDataHistorical.deleted_at == None)
             .filter(MarketDataHistorical.symbol == symbol)
-            .all()
+            .filter(MarketDataHistorical.asset_type == asset_type)
+            .first()
+        )
+
+    @classmethod
+    def get_market_data_historical_by_name(
+        cls, db: Session, name: str, asset_type: AssetType
+    ):
+        """
+        Gets all historical market data from database based on given name and asset type.
+        """
+
+        return (
+            db.query(MarketDataHistorical)
+            .where(MarketDataHistorical.deleted_at == None)
+            .filter(MarketDataHistorical.name == name)
+            .filter(MarketDataHistorical.asset_type == asset_type)
+            .first()
         )

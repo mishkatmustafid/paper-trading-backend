@@ -72,7 +72,7 @@ class PortfolioStock(Base):
         )
 
     @classmethod
-    def get_by_portfolio_id(cls, db: Session, portfolio_id: int):
+    def get_by_portfolio_id(cls, db: Session, portfolio_id: str):
         """
         Gets all portfolio from database based on a given portfolio id.
         """

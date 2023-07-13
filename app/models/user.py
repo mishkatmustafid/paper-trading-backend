@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 
 from app.models import Base
 
-from .profile_status import ProfileStatus
+from app.models.profile_status import ProfileStatus
 
 
 class User(Base):
