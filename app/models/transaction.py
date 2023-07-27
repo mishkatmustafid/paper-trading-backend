@@ -50,7 +50,7 @@ class Transaction(Base):
 
     asset_id: str = Column(
         UUID(as_uuid=True),
-        # ForeignKey("portfolio.portfolio_id"),
+        ForeignKey("assets.asset_id"),
         nullable=False,
     )
 
