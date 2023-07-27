@@ -4,7 +4,7 @@ Portfolio models module
 
 import uuid
 
-from sqlalchemy import Column, ForeignKey, Identity, Integer, String
+from sqlalchemy import Column, ForeignKey, Identity, Integer, String, Float
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Session
 
@@ -38,6 +38,7 @@ class Portfolio(Base):
         nullable=False,
     )
     name: str = Column(String(50), nullable=False)
+    balance: float = Column(Float, nullable=False, default=1000)
 
     @classmethod
     def get_by_portfolio_id(cls, db: Session, portfolio_id: str):
