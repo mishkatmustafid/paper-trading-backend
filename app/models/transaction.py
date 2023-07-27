@@ -13,6 +13,7 @@ from sqlalchemy.orm import Session, relationship
 from app.models import Base
 from app.models.order_type import OrderType
 from app.models.transaction_type import TransactionType
+from app.models.transaction_status import TransactionStatus
 
 
 class Transaction(Base):
@@ -47,7 +48,14 @@ class Transaction(Base):
         nullable=False,
     )
 
+    asset_id: str = Column(
+        UUID(as_uuid=True),
+        # ForeignKey("portfolio.portfolio_id"),
+        nullable=False,
+    )
+
     transaction_type: enum = Column(Enum(TransactionType), nullable=False)
+    transaction_status: enum = Column(Enum(TransactionStatus), nullable=False)
     transaction_date: datetime = Column(
         DateTime, default=datetime.utcnow, nullable=False
     )
@@ -56,10 +64,9 @@ class Transaction(Base):
     order_type: enum = Column(Enum(OrderType), nullable=False)
     limit_price: float = Column(Float, nullable=True)
     transaction_value = Column(Float, nullable=False)
-    realized_profit_loss = Column(Float, nullable=False)
 
     # Relationships
-    # portfolio_stock = relationship("PortfolioStock", back_populates="transactions")
+    portfolio_stock = relationship("PortfolioStock", back_populates="transactions")
 
     @classmethod
     def get_by_transaction_id(cls, db: Session, transaction_id: str):
