@@ -5,7 +5,7 @@ Portfolio Stock models module
 import uuid
 from datetime import datetime
 
-from sqlalchemy import Column, DateTime, ForeignKey, Identity, Integer, Numeric, String
+from sqlalchemy import Column, DateTime, ForeignKey, Identity, Integer, Numeric
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Session, relationship
 
@@ -43,7 +43,7 @@ class PortfolioStock(Base):
 
     asset_id: str = Column(
         UUID(as_uuid=True),
-        ForeignKey("market_data_historical.market_data_historical_id"),
+        ForeignKey("assets.asset_id"),
         nullable=False,
     )
     quantity: int = Column(Integer, nullable=False)
@@ -51,12 +51,11 @@ class PortfolioStock(Base):
         DateTime, default=datetime.utcnow, server_default="now()", nullable=False
     )
     purchase_price: Numeric = Column(Numeric(10, 2), nullable=False)
-    average_purchase_price: Numeric = Column(Numeric(10, 2), nullable=False)
-    total_quantity: int = Column(Integer, nullable=False)
     total_investment: Numeric = Column(Numeric(10, 2), nullable=False)
 
     # Relationships
-    # portfolio = relationship("Portfolio", back_populates="portfolio_stocks")
+    portfolio = relationship("Portfolio", back_populates="portfolio_stocks")
+    transactions = relationship("Transaction", back_populates="portfolio_stocks")
 
     @classmethod
     def get_by_portfolio_stock_id(cls, db: Session, portfolio_stock_id: int):
