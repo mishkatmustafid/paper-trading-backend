@@ -27,7 +27,7 @@ class UserBase(BaseModel):
 
 
 class CreateUser(UserBase):
-    """ "
+    """
     User create schema. Properties to receive via API on creation
     """
 
