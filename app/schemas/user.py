@@ -13,12 +13,7 @@ class UserBase(BaseModel):
     Base user class. This class holds all the possible attributes of a user.
     """
 
-    # > email is considered here as unique username
-    # --------------
-
     id: Optional[int] = None
-
-    # signup info
     full_name: Optional[str] = None
     email: Optional[str] = None
     password: Optional[str] = None
@@ -95,8 +90,6 @@ class SignInUserResponse(BaseModel):
 
     class Config:
         orm_mode = True
-
-        # pylint: disable=line-too-long
         schema_extra = {
             "example": {
                 "status": True,
@@ -119,7 +112,7 @@ class GetAllUsersResponse(BaseModel):
         schema_extra = {
             "example": {
                 "status": True,
-                "message": "API user created successfully!",
+                "message": "All users found!",
                 "users": [
                     {
                         "fullname": "Paper trade",
