@@ -48,7 +48,7 @@ class MarketDataHistorical(Base):
     asset = relationship("Assets", back_populates="market_data_historical")
 
     @classmethod
-    def get_market_data_historical_by_market_data_historical_id(
+    def get_by_market_data_historical_id(
         cls, db: Session, market_data_historical_id: str
     ):
         return (
