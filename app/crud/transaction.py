@@ -37,6 +37,10 @@ class CRUDTransaction(BaseModel):
         return Transaction.get_by_portfolio_stock_id(db, portfolio_stock_id)
 
     @staticmethod
+    def get_by_asset_id(db: Session, asset_id: str):
+        return Transaction.get_by_asset_id(db, asset_id)
+
+    @staticmethod
     def update(
         db: Session,
         transaction_id: str,
