@@ -1,9 +1,30 @@
+"""
+Market Data Historical schema module
+"""
+
+from datetime import datetime
 from typing import Optional
 
 from pydantic import BaseModel, Field
 
 
-class GetPriceResponse(BaseModel):
+class MarketDataHistorical(BaseModel):
+    market_data_historical_id: Optional[str] = None
+    asset_id: Optional[str] = None
+    datetime: Optional[datetime] = None
+    open: Optional[float] = None
+    high: Optional[float] = None
+    low: Optional[float] = None
+    close: Optional[float] = None
+    volume: Optional[int] = None
+
+
+class MarketDataHistoricalResponseBase(BaseModel):
+    status: Optional[bool] = True
+    message: Optional[str] = None
+
+
+class GetDataResponse(BaseModel):
     status: Optional[bool] = True
     message: Optional[str] = None
     details: Optional[dict] = None
@@ -12,34 +33,22 @@ class GetPriceResponse(BaseModel):
         schema_extra = {
             "example": {
                 "status": True,
-                "message": "Successfully got the price!",
-                "details": {"symbol": "BTCUSDT", "price": "9000.0"},
-            }
-        }
-
-
-class GetDetailsResponse(BaseModel):
-    status: Optional[bool] = True
-    message: Optional[str] = None
-    details: Optional[dict] = None
-
-    class Config:
-        schema_extra = {
-            "example": {
-                "status": True,
-                "message": "Successfully got the details!",
+                "message": "Successfully got the data!",
                 "details": {
-                    "symbol": "BTCUSDT",
-                    "open": "9000.00",
-                    "high": "9000.00",
-                    "low": "9000.00",
-                    "volume": "9000.00",
+                    "market_data_historical_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                    "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                    "date": "2023-07-12T15:30:00",
+                    "open": 30000,
+                    "high": 30000,
+                    "low": 30000,
+                    "close": 30000,
+                    "volume": 30000,
                 },
             }
         }
 
 
-class GetKlinesResponse(BaseModel):
+class GetAllDataResponse(BaseModel):
     status: Optional[bool] = True
     message: Optional[str] = None
     details: Optional[dict] = None
@@ -48,27 +57,61 @@ class GetKlinesResponse(BaseModel):
         schema_extra = {
             "example": {
                 "status": True,
-                "message": "Successfully got the klines!",
+                "message": "Successfully got all the data!",
+                "details": [
+                    {
+                        "market_data_historical_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                        "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                        "date": "2023-07-12T15:30:00",
+                        "open": 30000,
+                        "high": 30000,
+                        "low": 30000,
+                        "close": 30000,
+                        "volume": 30000,
+                    }
+                ],
+            }
+        }
+
+
+class CreateMarketDataHistorical(MarketDataHistorical):
+    asset_id: str = Field(...)
+    datetime: datetime = Field(...)
+    open: float = Field(...)
+    high: float = Field(...)
+    low: float = Field(...)
+    close: float = Field(...)
+    volume: int = Field(...)
+
+    class Config:
+        schema_extra = {
+            "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+            "date": "2023-07-12T15:30:00",
+            "open": 30000,
+            "high": 30000,
+            "low": 30000,
+            "close": 30000,
+            "volume": 30000,
+        }
+
+
+class CreateMarketDataHistoricalResponse(MarketDataHistoricalResponseBase):
+    details: Optional[dict] = None
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "status": True,
+                "message": "Successfully created the market data historical",
                 "details": {
-                    "symbol": "BTCUSDT",
-                    "interval": "1m",
-                    "limit": "100",
-                    "klines": [
-                        {
-                            "open_time": 1588954400,
-                            "open": "9000.00",
-                            "high": "9000.00",
-                            "low": "9000.00",
-                            "close": "9000.00",
-                            "volume": "9000.00",
-                            "close_time": 1588954400,
-                            "quote_asset_volume": "9000.00",
-                            "number_of_trades": 0,
-                            "taker_buy_base_asset_volume": "9000.00",
-                            "taker_buy_quote_asset_volume": "9000.00",
-                            "ignore": "",
-                        }
-                    ],
+                    "market_data_historical_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                    "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                    "date": "2023-07-12T15:30:00",
+                    "open": 30000,
+                    "high": 30000,
+                    "low": 30000,
+                    "close": 30000,
+                    "volume": 30000,
                 },
             }
         }
