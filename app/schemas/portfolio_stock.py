@@ -18,8 +18,6 @@ class PortfolioStockBase(BaseModel):
     quantity: Optional[int] = None
     purchase_date: Optional[datetime] = None
     purchase_price: Optional[float] = None
-    average_purchase_price: Optional[float] = None
-    total_quantity: Optional[int] = None
     total_investment: Optional[float] = None
 
 
@@ -42,12 +40,10 @@ class GetPortfolioStockResponse(PortfolioStockResponseBase):
                     "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "portfolio_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
-                    "quantity": "10",
+                    "quantity": 10,
                     "purchase_date": "2023-07-12T15:30:00",
-                    "purchase_price": "2.3",
-                    "average_purchase_price": "2.3",
-                    "total_quantity": "100",
-                    "total_investment": "230.0",
+                    "purchase_price": 2.3,
+                    "total_investment": 230.0,
                 },
             }
         }
@@ -58,24 +54,22 @@ class CreatePortfolioStock(PortfolioStockBase):
     Portfolio creation schema
     """
 
+    portfolio_id: str = Field(...)
     asset_id: str = Field(...)
     quantity: int = Field(...)
     purchase_date: datetime = Field(...)
     purchase_price: float = Field(...)
-    average_purchase_price: float = Field(...)
-    total_quantity: int = Field(...)
     total_investment: float = Field(...)
 
     class Config:
         schema_extra = {
             "example": {
+                "portfolio_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                 "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
-                "quantity": "10",
+                "quantity": 10,
                 "purchase_date": "2023-07-12T15:30:00",
-                "purchase_price": "2.3",
-                "average_purchase_price": "2.3",
-                "total_quantity": "100",
-                "total_investment": "230.0",
+                "purchase_price": 2.3,
+                "total_investment": 230.0,
             }
         }
 
@@ -92,12 +86,10 @@ class CreatePortfolioStockResponse(PortfolioStockResponseBase):
                     "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "portfolio_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
-                    "quantity": "10",
+                    "quantity": 10,
                     "purchase_date": "2023-07-12T15:30:00",
-                    "purchase_price": "2.3",
-                    "average_purchase_price": "2.3",
-                    "total_quantity": "100",
-                    "total_investment": "230.0",
+                    "purchase_price": 2.3,
+                    "total_investment": 230.0,
                 },
             }
         }
@@ -114,8 +106,6 @@ class UpdatePortfolioStock(PortfolioStockBase):
     quantity: Optional[int] = None
     purchase_date: Optional[datetime] = None
     purchase_price: Optional[float] = None
-    average_purchase_price: Optional[float] = None
-    total_quantity: Optional[int] = None
     total_investment: Optional[float] = None
 
     class Config:
@@ -124,12 +114,10 @@ class UpdatePortfolioStock(PortfolioStockBase):
                 "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                 "portfolio_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                 "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
-                "quantity": "10",
+                "quantity": 10,
                 "purchase_date": "2023-07-12T15:30:00",
-                "purchase_price": "2.3",
-                "average_purchase_price": "2.3",
-                "total_quantity": "100",
-                "total_investment": "230.0",
+                "purchase_price": 2.3,
+                "total_investment": 230.0,
             }
         }
 
@@ -146,12 +134,10 @@ class UpdatePortfolioStockResponse(PortfolioStockResponseBase):
                     "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "portfolio_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
-                    "quantity": "10",
+                    "quantity": 10,
                     "purchase_date": "2023-07-12T15:30:00",
-                    "purchase_price": "2.3",
-                    "average_purchase_price": "2.3",
-                    "total_quantity": "100",
-                    "total_investment": "230.0",
+                    "purchase_price": 2.3,
+                    "total_investment": 230.0,
                 },
             }
         }
