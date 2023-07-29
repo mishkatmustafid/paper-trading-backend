@@ -93,3 +93,16 @@ class Transaction(Base):
             .fitler(Transaction.portfolio_stock_id == portfolio_stock_id)
             .all()
         )
+
+    @classmethod
+    def get_by_asset_id(cls, db: Session, asset_id: str):
+        """
+        Gets all transaction from database based on a given asset id
+        """
+
+        return (
+            db.query(Transaction)
+            .where(Transaction.deleted_at == None)
+            .filter(Transaction.asset_id == asset_id)
+            .all()
+        )
