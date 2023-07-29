@@ -7,3 +7,4 @@ from app.crud.portfolio import portfolio
 from app.crud.portfolio_stock import portfolio_stock
 from app.crud.transaction import transaction
 from app.crud.user import user
+from app.crud.assets import assets
