@@ -57,7 +57,7 @@ async def create_portfolio_stock(
                 "Invalid UUID format for asset uuid",
                 status_code=400,
             )
-        if not crud.portfolio_stock.get_by_portfolio_id(db, portfolio_id):
+        if not crud.portfolio.get_by_portfolio_id(db, portfolio_id):
             raise InvalidUUIDError(
                 "Invalid portfolio uuid",
                 status_code=400,
