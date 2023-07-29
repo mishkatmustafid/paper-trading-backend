@@ -5,6 +5,7 @@ Router modules import
 from fastapi import APIRouter
 
 from app.api.v1 import (
+    assets,
     home,
     market_data_historical,
     portfolio,
@@ -25,6 +26,7 @@ api_router.include_router(
 api_router.include_router(
     portfolio_stock.router, prefix="/portfolio_stock", tags=["portfoliostocks"]
 )
+api_router.include_router(assets.router, prefix="/assets", tags=["assets"])
 api_router.include_router(
     market_data_historical.router,
     prefix="/marketdata",
