@@ -82,3 +82,16 @@ class PortfolioStock(Base):
             .filter(PortfolioStock.portfolio_id == portfolio_id)
             .all()
         )
+
+    @classmethod
+    def get_by_asset_id(cls, db: Session, asset_id: str):
+        """
+        Gets all portfolio from database based on a given portfolio id.
+        """
+
+        return (
+            db.query(PortfolioStock)
+            .where(PortfolioStock.deleted_at == None)
+            .filter(PortfolioStock.asset_id == asset_id)
+            .all()
+        )
