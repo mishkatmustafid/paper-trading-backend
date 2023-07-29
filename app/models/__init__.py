@@ -10,3 +10,4 @@ from app.models.portfolio import Portfolio
 from app.models.portfolio_stock import PortfolioStock
 from app.models.transaction import Transaction
 from app.models.user import User
+from app.models.exchange import Exchange
