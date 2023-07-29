@@ -4,12 +4,11 @@ Assets models module
 import enum
 import uuid
 
-from sqlalchemy import Column, Enum, Float, Identity, String, Integer
+from sqlalchemy import Column, Enum, Float, Identity, Integer, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Session, relationship
 
-from app.models import Base
-from app.models.exchange import Exchange
+from app.models import Base, Exchange
 
 
 class Assets(Base):
@@ -44,7 +43,6 @@ class Assets(Base):
     open: float = Column(Float, nullable=False)
     high: float = Column(Float, nullable=False)
     low: float = Column(Float, nullable=False)
-    close: float = Column(Float, nullable=False)
     volume: int = Column(Integer, nullable=False)
     market_cap: float = Column(Float, nullable=False)
 
@@ -54,7 +52,7 @@ class Assets(Base):
     )
 
     @classmethod
-    def get_asset_by_asset_id(cls, db: Session, asset_id: str):
+    def get_by_asset_id(cls, db: Session, asset_id: str):
         return (
             db.query(Assets)
             .where(Assets.deleted_at == None)
@@ -63,7 +61,7 @@ class Assets(Base):
         )
 
     @classmethod
-    def get_asset_by_symbol(cls, db: Session, symbol: str, exchange: Exchange):
+    def get_by_symbol(cls, db: Session, symbol: str, exchange: Exchange):
         """
         Gets all historical market data from database based on given symbol and asset type.
         """
@@ -77,7 +75,7 @@ class Assets(Base):
         )
 
     @classmethod
-    def get_asset_by_name(cls, db: Session, name: str, exchange: Exchange):
+    def get_by_name(cls, db: Session, name: str, exchange: Exchange):
         """
         Gets all historical market data from database based on given name and asset type.
         """
