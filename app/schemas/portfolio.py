@@ -74,14 +74,12 @@ class UpdatePortfolio(PortfolioBase):
     """
 
     portfolio_id: str = Field(...)
-    user_id: Optional[str] = None
     name: str = Field(...)
 
     class Config:
         schema_extra = {
             "example": {
                 "portfolio_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
-                "user_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                 "name": "Practice 01",
             }
         }
