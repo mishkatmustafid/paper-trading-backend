@@ -56,26 +56,31 @@ class GetPriceResponse(BaseModel):
 
 
 class CreateAsset(AssetsBase):
-    asset_id: str = Field(...)
-    datetime: datetime = Field(...)
+    symbol: str = Field(...)
+    name: str = Field(...)
+    exchange: str = Field(...)
+    current_price: float = Field(...)
+    previous_close_price: float = Field(...)
     open: float = Field(...)
     high: float = Field(...)
     low: float = Field(...)
-    close: float = Field(...)
     volume: int = Field(...)
+    market_cap: float = Field(...)
 
     class Config:
         schema_extra = {
-            "symbol": "APPL",
-            "name": "Apple Inc.",
-            "exchange": "nyse",
-            "current_price": 30000,
-            "previous_close_price": 30000,
-            "open": 30000,
-            "high": 30000,
-            "low": 30000,
-            "volume": 30000,
-            "market_cap": 30000,
+            "example": {
+                "symbol": "APPL",
+                "name": "Apple Inc.",
+                "exchange": "NYSE",
+                "current_price": 30000,
+                "previous_close_price": 30000,
+                "open": 30000,
+                "high": 30000,
+                "low": 30000,
+                "volume": 30000,
+                "market_cap": 30000,
+            }
         }
 
 
