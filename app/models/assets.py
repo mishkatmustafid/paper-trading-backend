@@ -6,7 +6,9 @@ import uuid
 
 from sqlalchemy import Column, Enum, Float, Identity, Integer, String
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import Session, relationship
+from sqlalchemy.orm import Session
+
+# from sqlalchemy.orm import relationship
 
 from app.models import Base, Exchange
 
@@ -47,9 +49,7 @@ class Assets(Base):
     market_cap: float = Column(Float, nullable=False)
 
     # Relationships
-    market_data_historical = relationship(
-        "MarketDataHistorical", back_populates="assets"
-    )
+    # market_data_historical = relationship(MarketDataHistorical, back_populates="assets")
 
     @classmethod
     def get_by_asset_id(cls, db: Session, asset_id: str):

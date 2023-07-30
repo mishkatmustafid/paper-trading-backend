@@ -8,7 +8,9 @@ from datetime import datetime
 
 from sqlalchemy import Column, DateTime, Enum, Float, ForeignKey, Identity, Integer
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import Session, relationship
+from sqlalchemy.orm import Session
+
+# from sqlalchemy.orm import relationship
 
 from app.models import Base
 from app.models.order_type import OrderType
@@ -66,7 +68,7 @@ class Transaction(Base):
     transaction_value = Column(Float, nullable=False)
 
     # Relationships
-    portfolio_stock = relationship("PortfolioStock", back_populates="transactions")
+    # portfolio_stock = relationship("PortfolioStock", back_populates="transactions")
 
     @classmethod
     def get_by_transaction_id(cls, db: Session, transaction_id: str):

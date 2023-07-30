@@ -6,7 +6,9 @@ import uuid
 
 from sqlalchemy import Column, ForeignKey, Identity, Integer, String, Float
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import Session, relationship
+from sqlalchemy.orm import Session
+
+# from sqlalchemy.orm import relationship
 
 from app.models import Base
 
@@ -41,7 +43,7 @@ class Portfolio(Base):
     balance: float = Column(Float, nullable=False, default=1000)
 
     # Relationships
-    portfolio_stocks = relationship("Portfolio_Stock", back_populates="portfolio")
+    # portfolio_stocks = relationship("Portfolio_Stock", back_populates="portfolio")
 
     @classmethod
     def get_by_portfolio_id(cls, db: Session, portfolio_id: str):

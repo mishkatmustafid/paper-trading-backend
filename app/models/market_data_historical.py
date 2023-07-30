@@ -5,7 +5,9 @@ import uuid
 
 from sqlalchemy import Column, DateTime, ForeignKey, Float, Identity, Integer
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import Session, relationship
+from sqlalchemy.orm import Session
+
+# from sqlalchemy.orm import relationship
 
 from app.models import Base
 
@@ -45,7 +47,7 @@ class MarketDataHistorical(Base):
     volume: int = Column(Integer, nullable=False)
 
     # Relationships
-    asset = relationship("Assets", back_populates="market_data_historical")
+    # asset = relationship(Assets, back_populates="market_data_historical")
 
     @classmethod
     def get_by_market_data_historical_id(

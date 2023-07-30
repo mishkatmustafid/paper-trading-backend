@@ -7,7 +7,9 @@ from datetime import datetime
 
 from sqlalchemy import Column, DateTime, ForeignKey, Identity, Integer, Numeric
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import Session, relationship
+from sqlalchemy.orm import Session
+
+# from sqlalchemy.orm import relationship
 
 from app.models import Base
 
@@ -54,8 +56,8 @@ class PortfolioStock(Base):
     total_investment: Numeric = Column(Numeric(10, 2), nullable=False)
 
     # Relationships
-    portfolio = relationship("Portfolio", back_populates="portfolio_stocks")
-    transactions = relationship("Transaction", back_populates="portfolio_stocks")
+    # portfolio = relationship("Portfolio", back_populates="portfolio_stocks")
+    # transactions = relationship("Transaction", back_populates="portfolio_stocks")
 
     @classmethod
     def get_by_portfolio_stock_id(cls, db: Session, portfolio_stock_id: int):
