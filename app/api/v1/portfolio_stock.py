@@ -70,18 +70,7 @@ async def create_portfolio_stock(
         return {
             "status": True,
             "message": "Successfully created the Portfolio Stock!",
-            "details": {
-                "portfolio_stock_id": portfolio_stock["portfolio_stock_id"],
-                "portfolio_id": portfolio_id,
-                "name": portfolio_stock["name"],
-                "asset_id": portfolio_stock["asset_id"],
-                "quantity": portfolio_stock["quantity"],
-                "purchase_date": portfolio_stock["purchase_date"],
-                "purchase_price": portfolio_stock["purchase_price"],
-                "average_purchase_price": portfolio_stock["average_purchase_price"],
-                "total_quantity": portfolio_stock["total_quantity"],
-                "total_investment": portfolio_stock["total_investment"],
-            },
+            "details": portfolio_stock,
         }
 
     except Exception as err:
@@ -127,20 +116,7 @@ async def get_portfolio_stock(
                 return {
                     "status": True,
                     "message": "Portfolio Stock Found!",
-                    "details": {
-                        "portfolio_stock_id": portfolio_stock["portfolio_stock_id"],
-                        "portfolio_id": portfolio_id,
-                        "name": portfolio_stock["name"],
-                        "asset_id": portfolio_stock["asset_id"],
-                        "quantity": portfolio_stock["quantity"],
-                        "purchase_date": portfolio_stock["purchase_date"],
-                        "purchase_price": portfolio_stock["purchase_price"],
-                        "average_purchase_price": portfolio_stock[
-                            "average_purchase_price"
-                        ],
-                        "total_quantity": portfolio_stock["total_quantity"],
-                        "total_investment": portfolio_stock["total_investment"],
-                    },
+                    "details": portfolio_stock,
                 }
             return {"status": False, "message": "Portfolio Stock Not Found!"}
         if portfolio_stocks := General.exclude_metadata(
