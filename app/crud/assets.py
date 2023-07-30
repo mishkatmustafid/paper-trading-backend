@@ -72,6 +72,7 @@ class CRUDAssets(BaseModel):
             db.add(asset_details)
             db.commit()
             db.refresh(asset_details)
+        return asset_details
 
     def delete(self, db: Session, asset_id: str):
         # Delete performs a soft delete i.e. deleted_at attribute

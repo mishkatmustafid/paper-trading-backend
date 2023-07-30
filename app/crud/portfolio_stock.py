@@ -68,6 +68,7 @@ class CRUDPortfolioStock(BaseModel):
             db.add(portfolio_stock_details)
             db.commit()
             db.refresh(portfolio_stock_details)
+        return portfolio_stock_details
 
     def delete(self, db: Session, portfolio_stock_id: str):
         # Delete performs a soft delete i.e. deleted_at attribute

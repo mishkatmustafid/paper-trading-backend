@@ -70,6 +70,7 @@ class CRUDTransaction(BaseModel):
             db.add(transaction_details)
             db.commit()
             db.refresh(transaction_details)
+        return transaction_details
 
     def delete(self, db: Session, transaction_id: str):
         # Delete performs a soft delete i.e. deleted_at attribute

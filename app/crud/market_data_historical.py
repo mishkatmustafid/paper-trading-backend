@@ -70,6 +70,7 @@ class CRUDMarketDataHistorical(BaseModel):
             db.add(market_data_historical_details)
             db.commit()
             db.refresh(market_data_historical_details)
+        return market_data_historical_details
 
     def delete(self, db: Session, market_data_historical_id: str):
         # Delete performs a soft delete i.e. deleted_at attribute
