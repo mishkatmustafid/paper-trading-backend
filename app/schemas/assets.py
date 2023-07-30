@@ -9,7 +9,7 @@ from pydantic import BaseModel, Field
 from app.models import Exchange
 
 
-class Assets(BaseModel):
+class AssetsBase(BaseModel):
     asset_id: Optional[str] = None
     symbol: Optional[str] = None
     name: Optional[str] = None
@@ -55,7 +55,7 @@ class GetPriceResponse(BaseModel):
         }
 
 
-class CreateAsset(Assets):
+class CreateAsset(AssetsBase):
     asset_id: str = Field(...)
     datetime: datetime = Field(...)
     open: float = Field(...)
@@ -100,5 +100,30 @@ class CreateAssetResponse(AssetsResponseBase):
                     "volume": 30000,
                     "market_cap": 30000,
                 },
+            }
+        }
+
+
+class DeleteAsset(AssetsBase):
+    """
+    Asset delete schema. Properties to receive via API on delete
+    """
+
+    transaction_id: str = Field(...)
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+            }
+        }
+
+
+class DeleteAssetResponse(AssetsBase):
+    class Config:
+        schema_extra = {
+            "example": {
+                "status": True,
+                "message": "Successfully deleted the asset!",
             }
         }
