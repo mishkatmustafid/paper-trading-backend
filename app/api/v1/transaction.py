@@ -65,18 +65,7 @@ async def create_transaction(
         return {
             "status": True,
             "message": "Successfully created the Transaction!",
-            "details": {
-                "transaction_id": transaction["transaction_id"],
-                "portfolio_stock_id": portfolio_stock_id,
-                "transaction_type": transaction["transaction_type"],
-                "transaction_date": transaction["transaction_date"],
-                "transaction_price": transaction["transaction_price"],
-                "quantity": transaction["quantity"],
-                "order_type": transaction["order_type"],
-                "limit_price": transaction["limit_price"],
-                "transaction_value": transaction["transaction_value"],
-                "realized_profit_loss": transaction["realized_profit_loss"],
-            },
+            "details": transaction,
         }
 
     except Exception as err:
@@ -120,18 +109,7 @@ async def get_transaction(
                 return {
                     "status": True,
                     "message": "Transaction Found!",
-                    "details": {
-                        "transaction_id": transaction["transaction_id"],
-                        "portfolio_stock_id": portfolio_stock_id,
-                        "transaction_type": transaction["transaction_type"],
-                        "transaction_date": transaction["transaction_date"],
-                        "transaction_price": transaction["transaction_price"],
-                        "quantity": transaction["quantity"],
-                        "order_type": transaction["order_type"],
-                        "limit_price": transaction["limit_price"],
-                        "transaction_value": transaction["transaction_value"],
-                        "realized_profit_loss": transaction["realized_profit_loss"],
-                    },
+                    "details": transaction,
                 }
             return {"status": False, "message": "Transaction Not Found!"}
         if transactions := General.exclude_metadata(
@@ -155,13 +133,13 @@ async def get_transaction(
 
 
 @router.put(
-    "/{portfolio_stock_id}",
+    "/{transaction_id}",
     dependencies=[Depends(JWTBearer())],
     response_model=UpdateTransactionResponse,
     response_model_exclude_unset=True,
 )
 async def update_transaction(
-    portfolio_stock_id: str,
+    transaction_id: str,
     payload: UpdateTransaction,
     response: Response,
     db: Session = Depends(db_connection),
@@ -171,7 +149,7 @@ async def update_transaction(
     """
 
     try:
-        if not is_valid_uuid(portfolio_stock_id):
+        if not is_valid_uuid(transaction_id):
             raise InvalidUUIDError(
                 "Invalid UUID format for portfolio stock uuid",
                 status_code=400,
@@ -181,7 +159,7 @@ async def update_transaction(
                 "Invalid UUID format for transaction uuid",
                 status_code=400,
             )
-        payload.portfolio_stock_id = portfolio_stock_id
+        payload.transaction_id = transaction_id
         if transaction := General.exclude_metadata(
             jsonable_encoder(
                 crud.transaction.update(db, payload.transaction_id, payload)
@@ -206,13 +184,13 @@ async def update_transaction(
 
 
 @router.delete(
-    "/{portfolio_stock_id}",
+    "/{transaction_id}",
     dependencies=[Depends(JWTBearer())],
     response_model=DeleteTransactionResponse,
     response_model_exclude_unset=True,
 )
 async def delete_transaction(
-    portfolio_stock_id: str,
+    transaction_id: str,
     payload: DeleteTransaction,
     response: Response,
     db: Session = Depends(db_connection),
@@ -222,7 +200,7 @@ async def delete_transaction(
     """
 
     try:
-        if not is_valid_uuid(portfolio_stock_id):
+        if not is_valid_uuid(transaction_id):
             raise InvalidUUIDError(
                 "Invalid UUID format for portfolio stock uuid",
                 status_code=400,
