@@ -67,6 +67,7 @@ async def get_asset(
     asset_id: Optional[str] = None,
     name: Optional[str] = None,
     symbol: Optional[str] = None,
+    exchange: Optional[str] = None,
     db: Session = Depends(db_connection),
 ) -> Any:
     """
@@ -81,13 +82,14 @@ async def get_asset(
                 )
             details = crud.assets.get_by_asset_id(db, asset_id)
         elif name != None:
-            details = crud.assets.get_by_asset_id(db, name)
+            details = crud.assets.get_by_name(db, name, exchange)
         elif symbol != None:
-            details = crud.assets.get_by_asset_id(db, symbol)
+            details = crud.assets.get_by_symbol(db, symbol, exchange)
         else:
             details = crud.assets.get_multi(db)
 
         if details:
+            details = General.exclude_metadata(jsonable_encoder(details))
             return {
                 "status": True,
                 "message": "Successfully got the asset data!",
