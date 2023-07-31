@@ -54,7 +54,6 @@ class CreatePortfolioStock(PortfolioStockBase):
     Portfolio creation schema
     """
 
-    portfolio_id: str = Field(...)
     asset_id: str = Field(...)
     quantity: int = Field(...)
     purchase_date: datetime = Field(...)
@@ -64,7 +63,6 @@ class CreatePortfolioStock(PortfolioStockBase):
     class Config:
         schema_extra = {
             "example": {
-                "portfolio_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                 "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                 "quantity": 10,
                 "purchase_date": "2023-07-12T15:30:00",
@@ -100,7 +98,7 @@ class UpdatePortfolioStock(PortfolioStockBase):
     PortfolioStock update schema. Properties to receive via API on update
     """
 
-    portfolio_stock_id: str = Field(...)
+    portfolio_stock_id: Optional[str] = None
     portfolio_id: Optional[str] = None
     asset_id: Optional[str] = None
     quantity: Optional[int] = None
@@ -111,7 +109,6 @@ class UpdatePortfolioStock(PortfolioStockBase):
     class Config:
         schema_extra = {
             "example": {
-                "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                 "portfolio_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                 "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                 "quantity": 10,

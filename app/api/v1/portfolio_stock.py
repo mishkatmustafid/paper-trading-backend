@@ -138,13 +138,13 @@ async def get_portfolio_stock(
 
 
 @router.put(
-    "/{portfolio_id}",
+    "/{portfolio_stock_id}",
     dependencies=[Depends(JWTBearer())],
     response_model=UpdatePortfolioStockResponse,
     response_model_exclude_unset=True,
 )
 async def update_portfolio_stock(
-    portfolio_id: str,
+    portfolio_stock_id: str,
     payload: UpdatePortfolioStock,
     response: Response,
     db: Session = Depends(db_connection),
@@ -154,29 +154,37 @@ async def update_portfolio_stock(
     """
 
     try:
-        if not is_valid_uuid(portfolio_id):
+        if not is_valid_uuid(portfolio_stock_id):
             raise InvalidUUIDError(
                 "Invalid UUID format for portfolio uuid",
                 status_code=400,
             )
-        if not is_valid_uuid(payload.portfolio_stock_id):
-            raise InvalidUUIDError(
-                "Invalid UUID format for portfolio stock uuid",
-                status_code=400,
-            )
-        payload.portfolio_id = portfolio_id
+        if payload.portfolio_id:
+            if not is_valid_uuid(payload.portfolio_id):
+                raise InvalidUUIDError(
+                    "Invalid UUID format for portfolio stock uuid",
+                    status_code=400,
+                )
+            if not crud.portfolio.get_by_portfolio_id(db, payload.portfolio_id):
+                raise InvalidUUIDError("Invalid Portfolio uuid", status_code=400)
+        if payload.asset_id:
+            if not is_valid_uuid(payload.asset_id):
+                raise InvalidUUIDError(
+                    "Invalid UUID format for asset uuid",
+                    status_code=400,
+                )
+            if not crud.assets.get_by_asset_id(db, payload.asset_id):
+                raise InvalidUUIDError("Invalid Portfolio uuid", status_code=400)
         portfolio_stock = General.exclude_metadata(
             jsonable_encoder(
-                crud.portfolio_stock.update(db, payload.portfolio_stock_id, payload)
+                crud.portfolio_stock.update(db, portfolio_stock_id, payload)
             )
         )
         if portfolio_stock:
-            details = payload.dict(exclude_unset=True)
-            details["portfolio_stock_id"] = payload.portfolio_stock_id
             return {
                 "status": True,
                 "message": "Successfully updated the portfolio stock details!",
-                "details": details,
+                "details": portfolio_stock,
             }
 
         return {
@@ -190,14 +198,14 @@ async def update_portfolio_stock(
 
 
 @router.delete(
-    "/{portfolio_id}",
+    "/{portfolio_stock_id}",
     dependencies=[Depends(JWTBearer())],
     response_model=DeletePortfolioStockResponse,
     response_model_exclude_unset=True,
 )
 async def delete_portfolio_stock(
-    portfolio_id: str,
-    payload: DeletePortfolioStock,
+    portfolio_stock_id: str,
+    # payload: DeletePortfolioStock,
     response: Response,
     db: Session = Depends(db_connection),
 ) -> Any:
@@ -206,23 +214,16 @@ async def delete_portfolio_stock(
     """
 
     try:
-        if not is_valid_uuid(portfolio_id):
-            raise InvalidUUIDError(
-                "Invalid UUID format for portfolio uuid",
-                status_code=400,
-            )
-        if not is_valid_uuid(payload.portfolio_stock_id):
+        if not is_valid_uuid(portfolio_stock_id):
             raise InvalidUUIDError(
                 "Invalid UUID format for portfolio stock uuid",
                 status_code=400,
             )
         portfolio_stock = crud.portfolio_stock.get_by_portfolio_stock_id(
-            db, payload.portfolio_stock_id
+            db, portfolio_stock_id
         )
         if portfolio_stock:
-            if portfolio_stock := crud.portfolio_stock.delete(
-                db, payload.portfolio_stock_id
-            ):
+            if portfolio_stock := crud.portfolio_stock.delete(db, portfolio_stock_id):
                 return {
                     "status": True,
                     "message": "Successfully deleted the portfolio stock!",
