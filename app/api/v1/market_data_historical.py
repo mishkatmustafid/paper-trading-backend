@@ -78,8 +78,6 @@ async def get_info(
             )
         if details := crud.market_data_historical.get_by_asset_id(db, asset_id):
             details = General.exclude_metadata(jsonable_encoder(details))
-            print("Endpoint")
-            print(details)
             return {
                 "status": True,
                 "message": "Successfully got the asset data!",
