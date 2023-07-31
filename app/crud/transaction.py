@@ -51,7 +51,7 @@ class CRUDTransaction(BaseModel):
         """
 
         # retrieve details of the given transaction
-        if transaction_details := Transaction.get_transaction_by_id(db, transaction_id):
+        if transaction_details := Transaction.get_by_transaction_id(db, transaction_id):
             obj_data = jsonable_encoder(transaction_details)
 
             # check if the given payload (i.e. obj_in) is in a

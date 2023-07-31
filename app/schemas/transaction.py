@@ -8,6 +8,7 @@ from typing import Any, Optional
 from pydantic import BaseModel, Field
 
 from app.models.order_type import OrderType
+from app.models.transaction_status import TransactionStatus
 from app.models.transaction_type import TransactionType
 
 
@@ -18,14 +19,15 @@ class TransactionBase(BaseModel):
 
     transaction_id: Optional[str] = None
     portfolio_stock_id: Optional[str] = None
+    asset_id: Optional[str] = None
     transaction_type: Optional[TransactionType] = None
-    transaction_date: Optional[str] = None
+    transaction_status: Optional[TransactionStatus] = None
+    transaction_date: Optional[datetime] = None
     transaction_price: Optional[str] = None
     quantity: Optional[str] = None
     order_type: Optional[OrderType] = None
     limit_price: Optional[str] = None
     transaction_value: Optional[str] = None
-    realized_profit_loss: Optional[str] = None
 
 
 class TransactionResponseBase(BaseModel):
@@ -46,14 +48,15 @@ class GetTransactionResponse(TransactionResponseBase):
                 "details": {
                     "transaction_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                    "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "transaction_type": "buy",
+                    "transaction_status": "pending",
                     "transaction_date": "2023-07-12T15:30:00",
-                    "transaction_price": "23.5",
-                    "quantity": "10",
+                    "transaction_price": 23.5,
+                    "quantity": 10,
                     "order_type": "market",
                     "limit_price": "",
-                    "transaction_value": "235",
-                    "realized_profit_loss": "20",
+                    "transaction_value": 235,
                 },
             }
         }
@@ -64,28 +67,29 @@ class CreateTransaction(TransactionBase):
     Transaction creation schema
     """
 
-    portfolio_stock_id: str = Field(...)
-    transaction_type: TransactionType = Field(...)
+    portfolio_stock_id: Optional[str] = None
+    asset_id: str = Field(...)
+    transaction_type: str = Field(...)
+    transaction_status: str = Field(...)
     transaction_date: datetime = Field(...)
     transaction_price: float = Field(...)
     quantity: int = Field(...)
-    order_type: OrderType = Field(...)
+    order_type: str = Field(...)
     limit_price: Optional[float] = None
     transaction_value: float = Field(...)
-    realized_profit_loss: float = Field(...)
 
     class Config:
         schema_extra = {
             "example": {
-                "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
-                "transaction_type": "buy",
+                "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                "transaction_type": "BUY",
+                "transaction_status": "PENDING",
                 "transaction_date": "2023-07-12T15:30:00",
-                "transaction_price": "23.5",
-                "quantity": "10",
-                "order_type": "market",
-                "limit_price": "",
-                "transaction_value": "235",
-                "realized_profit_loss": "20",
+                "transaction_price": 23.5,
+                "quantity": 10,
+                "order_type": "MARKET",
+                "limit_price": None,
+                "transaction_value": 235,
             }
         }
 
@@ -99,15 +103,17 @@ class CreateTransactionResponse(TransactionResponseBase):
                 "status": True,
                 "message": "Successfully created the transaction!",
                 "details": {
+                    "transaction_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                    "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "transaction_type": "buy",
+                    "transaction_status": "pending",
                     "transaction_date": "2023-07-12T15:30:00",
-                    "transaction_price": "23.5",
-                    "quantity": "10",
+                    "transaction_price": 23.5,
+                    "quantity": 10,
                     "order_type": "market",
                     "limit_price": "",
-                    "transaction_value": "235",
-                    "realized_profit_loss": "20",
+                    "transaction_value": 235,
                 },
             }
         }
@@ -118,30 +124,31 @@ class UpdateTransaction(TransactionBase):
     Transaction update schema. Properties to receive via API on update
     """
 
-    transaction_id: str = Field(...)
+    transaction_id: Optional[str] = None
     portfolio_stock_id: Optional[str] = None
-    transaction_type: Optional[TransactionType] = None
+    asset_id: Optional[str] = None
+    transaction_type: Optional[str] = None
+    transaction_status: Optional[str] = None
     transaction_date: Optional[str] = None
     transaction_price: Optional[str] = None
     quantity: Optional[str] = None
-    order_type: Optional[OrderType] = None
+    order_type: Optional[str] = None
     limit_price: Optional[str] = None
     transaction_value: Optional[str] = None
-    realized_profit_loss: Optional[str] = None
 
     class Config:
         schema_extra = {
             "example": {
-                "transaction_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                 "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
-                "transaction_type": "buy",
+                "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                "transaction_type": "BUY",
+                "transaction_status": "PENDING",
                 "transaction_date": "2023-07-12T15:30:00",
-                "transaction_price": "23.5",
-                "quantity": "10",
-                "order_type": "market",
+                "transaction_price": 23.5,
+                "quantity": 10,
+                "order_type": "MARKET",
                 "limit_price": "",
-                "transaction_value": "235",
-                "realized_profit_loss": "20",
+                "transaction_value": 235,
             }
         }
 
@@ -157,14 +164,15 @@ class UpdateTransactionResponse(TransactionResponseBase):
                 "details": {
                     "transaction_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                    "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "transaction_type": "buy",
+                    "transaction_status": "pending",
                     "transaction_date": "2023-07-12T15:30:00",
-                    "transaction_price": "23.5",
-                    "quantity": "10",
+                    "transaction_price": 23.5,
+                    "quantity": 10,
                     "order_type": "market",
                     "limit_price": "",
-                    "transaction_value": "235",
-                    "realized_profit_loss": "20",
+                    "transaction_value": 235,
                 },
             }
         }

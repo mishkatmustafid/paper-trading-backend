@@ -151,26 +151,33 @@ async def update_transaction(
     try:
         if not is_valid_uuid(transaction_id):
             raise InvalidUUIDError(
-                "Invalid UUID format for portfolio stock uuid",
-                status_code=400,
-            )
-        if not is_valid_uuid(payload.transaction_id):
-            raise InvalidUUIDError(
                 "Invalid UUID format for transaction uuid",
                 status_code=400,
             )
+        if payload.portfolio_stock_id:
+            if not is_valid_uuid(payload.portfolio_stock_id):
+                raise InvalidUUIDError(
+                    "Invalid UUID format for portfolio stock uuid",
+                    status_code=400,
+                )
+            if not crud.portfolio.get_by_portfolio_id(db, payload.portfolio_stock_id):
+                raise InvalidUUIDError("Invalid Asset uuid", status_code=400)
+        if payload.asset_id:
+            if not is_valid_uuid(payload.asset_id):
+                raise InvalidUUIDError(
+                    "Invalid UUID format for asset uuid",
+                    status_code=400,
+                )
+            if not crud.assets.get_by_asset_id(db, payload.asset_id):
+                raise InvalidUUIDError("Invalid Portfolio uuid", status_code=400)
         payload.transaction_id = transaction_id
         if transaction := General.exclude_metadata(
-            jsonable_encoder(
-                crud.transaction.update(db, payload.transaction_id, payload)
-            )
+            jsonable_encoder(crud.transaction.update(db, transaction_id, payload))
         ):
-            details = payload.dict(exclude_unset=True)
-            details["transaction_id"] = transaction["transaction_id"]
             return {
                 "status": True,
                 "message": "Successfully updated the transaction details!",
-                "details": details,
+                "details": transaction,
             }
 
         return {
@@ -191,7 +198,7 @@ async def update_transaction(
 )
 async def delete_transaction(
     transaction_id: str,
-    payload: DeleteTransaction,
+    # payload: DeleteTransaction,
     response: Response,
     db: Session = Depends(db_connection),
 ) -> Any:
@@ -205,14 +212,14 @@ async def delete_transaction(
                 "Invalid UUID format for portfolio stock uuid",
                 status_code=400,
             )
-        if not is_valid_uuid(payload.transaction_id):
+        if not is_valid_uuid(transaction_id):
             raise InvalidUUIDError(
                 "Invalid UUID format for transaction uuid",
                 status_code=400,
             )
-        transaction = crud.transaction.get_by_transaction_id(db, payload.transaction_id)
+        transaction = crud.transaction.get_by_transaction_id(db, transaction_id)
         if transaction:
-            if transaction := crud.transaction.delete(db, payload.transaction_id):
+            if transaction := crud.transaction.delete(db, transaction_id):
                 return {
                     "status": True,
                     "message": "Successfully deleted the transaction!",
