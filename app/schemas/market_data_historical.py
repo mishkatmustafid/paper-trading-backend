@@ -2,7 +2,7 @@
 Market Data Historical schema module
 """
 
-from datetime import datetime
+from datetime import datetime as dt
 from typing import Optional
 
 from pydantic import BaseModel, Field
@@ -11,7 +11,7 @@ from pydantic import BaseModel, Field
 class MarketDataHistorical(BaseModel):
     market_data_historical_id: Optional[str] = None
     asset_id: Optional[str] = None
-    datetime: Optional[datetime] = None
+    datetime: Optional[dt] = None
     open: Optional[float] = None
     high: Optional[float] = None
     low: Optional[float] = None
@@ -37,7 +37,7 @@ class GetDataResponse(BaseModel):
                 "details": {
                     "market_data_historical_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
-                    "date": "2023-07-12T15:30:00",
+                    "datetime": "2023-07-12T15:30:00",
                     "open": 30000,
                     "high": 30000,
                     "low": 30000,
@@ -51,7 +51,7 @@ class GetDataResponse(BaseModel):
 class GetAllDataResponse(BaseModel):
     status: Optional[bool] = True
     message: Optional[str] = None
-    details: Optional[dict] = None
+    details: Optional[list] = None
 
     class Config:
         schema_extra = {
@@ -62,7 +62,7 @@ class GetAllDataResponse(BaseModel):
                     {
                         "market_data_historical_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                         "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
-                        "date": "2023-07-12T15:30:00",
+                        "datetime": "2023-07-12T15:30:00",
                         "open": 30000,
                         "high": 30000,
                         "low": 30000,
@@ -76,7 +76,7 @@ class GetAllDataResponse(BaseModel):
 
 class CreateMarketDataHistorical(MarketDataHistorical):
     asset_id: str = Field(...)
-    datetime: datetime = Field(...)
+    datetime: dt = Field(...)
     open: float = Field(...)
     high: float = Field(...)
     low: float = Field(...)
@@ -85,13 +85,15 @@ class CreateMarketDataHistorical(MarketDataHistorical):
 
     class Config:
         schema_extra = {
-            "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
-            "date": "2023-07-12T15:30:00",
-            "open": 30000,
-            "high": 30000,
-            "low": 30000,
-            "close": 30000,
-            "volume": 30000,
+            "example": {
+                "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                "datetime": "2023-07-12T15:30:00",
+                "open": 30000,
+                "high": 30000,
+                "low": 30000,
+                "close": 30000,
+                "volume": 30000,
+            }
         }
 
 
@@ -106,7 +108,7 @@ class CreateMarketDataHistoricalResponse(MarketDataHistoricalResponseBase):
                 "details": {
                     "market_data_historical_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
-                    "date": "2023-07-12T15:30:00",
+                    "datetime": "2023-07-12T15:30:00",
                     "open": 30000,
                     "high": 30000,
                     "low": 30000,

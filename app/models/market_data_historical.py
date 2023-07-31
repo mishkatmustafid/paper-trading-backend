@@ -72,5 +72,5 @@ class MarketDataHistorical(Base):
             db.query(MarketDataHistorical)
             .where(MarketDataHistorical.deleted_at == None)
             .filter(MarketDataHistorical.asset_id == asset_id)
-            .all
+            .all()
         )

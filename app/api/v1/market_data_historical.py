@@ -19,8 +19,10 @@ from app.schemas import (
     CreateMarketDataHistoricalResponse,
     GetAllDataResponse,
 )
+from app.utils.exceptions import InvalidUUIDError
 from app.utils.general import General
 from app.utils.handle_error import handle_error
+from app.utils.uuid_validation import is_valid_uuid
 
 router = APIRouter()
 
@@ -69,7 +71,15 @@ async def get_info(
     Get data of an asset
     """
     try:
+        if not is_valid_uuid(asset_id):
+            raise InvalidUUIDError(
+                "Make sure to provide user uuid in a valid UUID format.",
+                status_code=400,
+            )
         if details := crud.market_data_historical.get_by_asset_id(db, asset_id):
+            details = General.exclude_metadata(jsonable_encoder(details))
+            print("Endpoint")
+            print(details)
             return {
                 "status": True,
                 "message": "Successfully got the asset data!",
