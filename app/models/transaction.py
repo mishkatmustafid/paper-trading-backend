@@ -46,7 +46,7 @@ class Transaction(Base):
 
     portfolio_stock_id: str = Column(
         UUID(as_uuid=True),
-        ForeignKey("portfolio.portfolio_id"),
+        ForeignKey("portfolio_stock.portfolio_stock_id"),
         nullable=False,
     )
 
@@ -79,7 +79,7 @@ class Transaction(Base):
         return (
             db.query(Transaction)
             .where(Transaction.deleted_at == None)
-            .fitler(Transaction.transaction_id == transaction_id)
+            .filter(Transaction.transaction_id == transaction_id)
             .first()
         )
 
@@ -92,7 +92,7 @@ class Transaction(Base):
         return (
             db.query(Transaction)
             .where(Transaction.deleted_at == None)
-            .fitler(Transaction.portfolio_stock_id == portfolio_stock_id)
+            .filter(Transaction.portfolio_stock_id == portfolio_stock_id)
             .all()
         )
 
