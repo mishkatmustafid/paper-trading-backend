@@ -156,13 +156,13 @@ async def update_portfolio_stock(
     try:
         if not is_valid_uuid(portfolio_stock_id):
             raise InvalidUUIDError(
-                "Invalid UUID format for portfolio uuid",
+                "Invalid UUID format for portfolio stock uuid",
                 status_code=400,
             )
         if payload.portfolio_id:
             if not is_valid_uuid(payload.portfolio_id):
                 raise InvalidUUIDError(
-                    "Invalid UUID format for portfolio stock uuid",
+                    "Invalid UUID format for portfolio uuid",
                     status_code=400,
                 )
             if not crud.portfolio.get_by_portfolio_id(db, payload.portfolio_id):
@@ -174,7 +174,7 @@ async def update_portfolio_stock(
                     status_code=400,
                 )
             if not crud.assets.get_by_asset_id(db, payload.asset_id):
-                raise InvalidUUIDError("Invalid Portfolio uuid", status_code=400)
+                raise InvalidUUIDError("Invalid Asset uuid", status_code=400)
         portfolio_stock = General.exclude_metadata(
             jsonable_encoder(
                 crud.portfolio_stock.update(db, portfolio_stock_id, payload)
