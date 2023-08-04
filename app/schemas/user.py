@@ -41,12 +41,22 @@ class CreateUser(UserBase):
 
 
 class CreateUserResponse(BaseModel):
-    status: bool
-    message: str
+    status: Optional[bool] = True
+    message: Optional[str] = None
+    details: Optional[dict] = None
 
     class Config:
         schema_extra = {
-            "example": {"status": True, "message": "Successfully created the user!"}
+            "example": {
+                "status": True,
+                "message": "Successfully created the user!",
+                "details": {
+                    "user_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                    "full_name": "Some User",
+                    "email": "user@papertrade.live",
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpcMdcpiJsb2NhbGhvc3QiLCJpYXQiOjE2MzYwMTUwNzgsImV4cCI6MTYzNjAxNjg3OCwiYXVkIjoiZW1haWxAc2h1bW9uLm1lIn0.0slVFU_INXv13X4yQAvW1VCNJI6XUu5qOP6aPXD03VM",
+                },
+            }
         }
 
 

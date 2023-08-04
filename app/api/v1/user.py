@@ -61,10 +61,19 @@ async def create_user(
             data_in = payload.dict(exclude_unset=True)
 
         crud.user.create(db, data_in)
+        user_details = General.exclude_metadata(
+            jsonable_encoder(crud.user.get_by_email(db, payload.email))
+        )
+        access_token = generate_token(payload)
 
         return {
             "status": True,
             "message": "Successfully created the user!",
+            "details": {
+                "full_name": user_details["full_name"],
+                "email": user_details["email"],
+                "access_token": access_token,
+            },
         }
 
     except Exception as err:
