@@ -18,7 +18,7 @@ class TransactionBase(BaseModel):
     """
 
     transaction_id: Optional[str] = None
-    portfolio_stock_id: Optional[str] = None
+    portfolio_id: Optional[str] = None
     asset_id: Optional[str] = None
     transaction_type: Optional[TransactionType] = None
     transaction_status: Optional[TransactionStatus] = None
@@ -47,7 +47,7 @@ class GetTransactionResponse(TransactionResponseBase):
                 "message": "Transaction found!",
                 "details": {
                     "transaction_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
-                    "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                    "portfolio_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "transaction_type": "buy",
                     "transaction_status": "pending",
@@ -67,7 +67,7 @@ class CreateTransaction(TransactionBase):
     Transaction creation schema
     """
 
-    portfolio_stock_id: Optional[str] = None
+    portfolio_id: Optional[str] = None
     asset_id: str = Field(...)
     transaction_type: str = Field(...)
     transaction_status: str = Field(...)
@@ -104,7 +104,7 @@ class CreateTransactionResponse(TransactionResponseBase):
                 "message": "Successfully created the transaction!",
                 "details": {
                     "transaction_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
-                    "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                    "portfolio_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "transaction_type": "buy",
                     "transaction_status": "pending",
@@ -125,7 +125,7 @@ class UpdateTransaction(TransactionBase):
     """
 
     transaction_id: Optional[str] = None
-    portfolio_stock_id: Optional[str] = None
+    portfolio_id: Optional[str] = None
     asset_id: Optional[str] = None
     transaction_type: Optional[str] = None
     transaction_status: Optional[str] = None
@@ -139,7 +139,7 @@ class UpdateTransaction(TransactionBase):
     class Config:
         schema_extra = {
             "example": {
-                "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                "portfolio_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                 "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                 "transaction_type": "BUY",
                 "transaction_status": "PENDING",
@@ -163,7 +163,7 @@ class UpdateTransactionResponse(TransactionResponseBase):
                 "message": "Successfully updated the transaction!",
                 "details": {
                     "transaction_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
-                    "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                    "portfolio_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "transaction_type": "buy",
                     "transaction_status": "pending",
@@ -174,21 +174,6 @@ class UpdateTransactionResponse(TransactionResponseBase):
                     "limit_price": "",
                     "transaction_value": 235,
                 },
-            }
-        }
-
-
-class DeleteTransaction(TransactionBase):
-    """
-    Transaction delete schema. Properties to receive via API on delete
-    """
-
-    transaction_id: str = Field(...)
-
-    class Config:
-        schema_extra = {
-            "example": {
-                "transaction_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
             }
         }
 
