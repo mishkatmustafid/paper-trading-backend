@@ -56,6 +56,7 @@ class CreatePortfolioStock(PortfolioStockBase):
     Portfolio creation schema
     """
 
+    portfolio_id: Optional[str] = None
     asset_id: str = Field(...)
     asset_name: str = Field(...)
     quantity: int = Field(...)
