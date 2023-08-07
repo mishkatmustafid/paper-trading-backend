@@ -35,6 +35,18 @@ class GetPortfolioResponse(PortfolioResponseBase):
                     "portfolio_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "user_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "name": "John Doe",
+                    "portfolio_stocks": [
+                        {
+                            "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                            "portfolio_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                            "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                            "asset_name": "Apple Inc.",
+                            "quantity": 10,
+                            "purchase_date": "2023-07-12T15:30:00",
+                            "purchase_price": 2.3,
+                            "total_investment": 230.0,
+                        }
+                    ],
                 },
             }
         }
