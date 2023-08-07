@@ -16,7 +16,6 @@ from app.db.session import db_connection
 from app.schemas import (
     CreatePortfolioStock,
     CreatePortfolioStockResponse,
-    DeletePortfolioStock,
     DeletePortfolioStockResponse,
     GetPortfolioStockResponse,
     UpdatePortfolioStock,
@@ -205,7 +204,6 @@ async def update_portfolio_stock(
 )
 async def delete_portfolio_stock(
     portfolio_stock_id: str,
-    # payload: DeletePortfolioStock,
     response: Response,
     db: Session = Depends(db_connection),
 ) -> Any:
