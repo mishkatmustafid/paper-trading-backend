@@ -2,7 +2,7 @@
 Assets schema module
 """
 
-from typing import Optional
+from typing import Optional, Any
 
 from pydantic import BaseModel, Field
 
@@ -31,7 +31,7 @@ class AssetsResponseBase(BaseModel):
 class GetPriceResponse(BaseModel):
     status: Optional[bool] = True
     message: Optional[str] = None
-    details: Optional[dict] = None
+    details: Optional[Any] = None
 
     class Config:
         schema_extra = {
