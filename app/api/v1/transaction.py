@@ -16,7 +16,6 @@ from app.db.session import db_connection
 from app.schemas import (
     CreateTransaction,
     CreateTransactionResponse,
-    DeleteTransaction,
     DeleteTransactionResponse,
     GetTransactionResponse,
     UpdateTransaction,
@@ -31,13 +30,13 @@ router = APIRouter()
 
 
 @router.post(
-    "/{portfolio_stock_id}",
+    "/{portfolio_id}",
     dependencies=[Depends(JWTBearer())],
     response_model=CreateTransactionResponse,
     response_model_exclude_unset=True,
 )
 async def create_transaction(
-    portfolio_stock_id: str,
+    portfolio_id: str,
     payload: CreateTransaction,
     response: Response,
     db: Session = Depends(db_connection),
@@ -47,17 +46,17 @@ async def create_transaction(
     """
 
     try:
-        if not is_valid_uuid(portfolio_stock_id):
+        if not is_valid_uuid(portfolio_id):
             raise InvalidUUIDError(
                 "Invalid UUID format for user uuid",
                 status_code=400,
             )
-        if not crud.portfolio_stock.get_by_portfolio_stock_id(db, portfolio_stock_id):
+        if not crud.portfolio.get_by_portfolio_id(db, portfolio_id):
             raise InvalidUUIDError(
-                "Invalid portfolio stock uuid",
+                "Invalid portfolio uuid",
                 status_code=400,
             )
-        payload.portfolio_stock_id = portfolio_stock_id
+        payload.portfolio_id = portfolio_id
         transaction = General.exclude_metadata(
             jsonable_encoder(crud.transaction.create(db, payload))
         )
@@ -74,13 +73,13 @@ async def create_transaction(
 
 
 @router.get(
-    "/{portfolio_stock_id}",
+    "/{portfolio_id}",
     dependencies=[Depends(JWTBearer())],
     response_model=GetTransactionResponse,
     response_model_exclude_unset=True,
 )
 async def get_transaction(
-    portfolio_stock_id: str,
+    portfolio_id: str,
     response: Response,
     transaction_id: Optional[str] = None,
     db: Session = Depends(db_connection),
@@ -90,7 +89,7 @@ async def get_transaction(
     """
 
     try:
-        if not is_valid_uuid(portfolio_stock_id):
+        if not is_valid_uuid(portfolio_id):
             raise InvalidUUIDError(
                 "Invalid UUID format for user uuid",
                 status_code=400,
@@ -113,9 +112,7 @@ async def get_transaction(
                 }
             return {"status": False, "message": "Transaction Not Found!"}
         if transactions := General.exclude_metadata(
-            jsonable_encoder(
-                crud.transaction.get_by_portfolio_stock_id(db, portfolio_stock_id)
-            )
+            jsonable_encoder(crud.transaction.get_by_portfolio_id(db, portfolio_id))
         ):
             return {
                 "status": True,
@@ -154,13 +151,13 @@ async def update_transaction(
                 "Invalid UUID format for transaction uuid",
                 status_code=400,
             )
-        if payload.portfolio_stock_id:
-            if not is_valid_uuid(payload.portfolio_stock_id):
+        if payload.portfolio_id:
+            if not is_valid_uuid(payload.portfolio_id):
                 raise InvalidUUIDError(
-                    "Invalid UUID format for portfolio stock uuid",
+                    "Invalid UUID format for portfolio uuid",
                     status_code=400,
                 )
-            if not crud.portfolio.get_by_portfolio_id(db, payload.portfolio_stock_id):
+            if not crud.portfolio.get_by_portfolio_id(db, payload.portfolio_id):
                 raise InvalidUUIDError("Invalid Asset uuid", status_code=400)
         if payload.asset_id:
             if not is_valid_uuid(payload.asset_id):
@@ -198,7 +195,6 @@ async def update_transaction(
 )
 async def delete_transaction(
     transaction_id: str,
-    # payload: DeleteTransaction,
     response: Response,
     db: Session = Depends(db_connection),
 ) -> Any:
@@ -209,7 +205,7 @@ async def delete_transaction(
     try:
         if not is_valid_uuid(transaction_id):
             raise InvalidUUIDError(
-                "Invalid UUID format for portfolio stock uuid",
+                "Invalid UUID format for portfolio uuid",
                 status_code=400,
             )
         if not is_valid_uuid(transaction_id):
