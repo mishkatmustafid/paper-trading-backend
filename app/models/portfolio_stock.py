@@ -5,7 +5,7 @@ Portfolio Stock models module
 import uuid
 from datetime import datetime
 
-from sqlalchemy import Column, DateTime, ForeignKey, Identity, Integer, Numeric
+from sqlalchemy import Column, DateTime, ForeignKey, Identity, Integer, Numeric, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Session
 
@@ -48,6 +48,7 @@ class PortfolioStock(Base):
         ForeignKey("assets.asset_id"),
         nullable=False,
     )
+    asset_name: str = Column(String(50), nullable=False)
     quantity: int = Column(Integer, nullable=False)
     purchase_date: datetime = Column(
         DateTime, default=datetime.utcnow, server_default="now()", nullable=False
