@@ -86,7 +86,7 @@ class Transaction(Base):
     @classmethod
     def get_by_portfolio_id(cls, db: Session, portfolio_id: str):
         """
-        Gets all transaction from database based on a given portfolio stock id
+        Gets all transaction from database based on a given portfolio id
         """
 
         return (
