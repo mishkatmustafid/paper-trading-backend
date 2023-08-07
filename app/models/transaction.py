@@ -84,7 +84,7 @@ class Transaction(Base):
         )
 
     @classmethod
-    def get_by_portfolio_stock_id(cls, db: Session, portfolio_stock_id: str):
+    def get_by_portfolio_id(cls, db: Session, portfolio_id: str):
         """
         Gets all transaction from database based on a given portfolio stock id
         """
@@ -92,7 +92,7 @@ class Transaction(Base):
         return (
             db.query(Transaction)
             .where(Transaction.deleted_at == None)
-            .filter(Transaction.portfolio_stock_id == portfolio_stock_id)
+            .filter(Transaction.portfolio_id == portfolio_id)
             .all()
         )
 
