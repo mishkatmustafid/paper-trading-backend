@@ -15,6 +15,7 @@ class PortfolioStockBase(BaseModel):
     portfolio_stock_id: Optional[str] = None
     portfolio_id: Optional[str] = None
     asset_id: Optional[str] = None
+    asset_name: Optional[str] = None
     quantity: Optional[int] = None
     purchase_date: Optional[datetime] = None
     purchase_price: Optional[float] = None
@@ -40,6 +41,7 @@ class GetPortfolioStockResponse(PortfolioStockResponseBase):
                     "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "portfolio_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                    "asset_name": "Apple Inc.",
                     "quantity": 10,
                     "purchase_date": "2023-07-12T15:30:00",
                     "purchase_price": 2.3,
@@ -55,6 +57,7 @@ class CreatePortfolioStock(PortfolioStockBase):
     """
 
     asset_id: str = Field(...)
+    asset_name: str = Field(...)
     quantity: int = Field(...)
     purchase_date: datetime = Field(...)
     purchase_price: float = Field(...)
@@ -64,6 +67,7 @@ class CreatePortfolioStock(PortfolioStockBase):
         schema_extra = {
             "example": {
                 "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                "asset_name": "Apple Inc.",
                 "quantity": 10,
                 "purchase_date": "2023-07-12T15:30:00",
                 "purchase_price": 2.3,
@@ -84,6 +88,7 @@ class CreatePortfolioStockResponse(PortfolioStockResponseBase):
                     "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "portfolio_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                    "asset_name": "Apple Inc.",
                     "quantity": 10,
                     "purchase_date": "2023-07-12T15:30:00",
                     "purchase_price": 2.3,
@@ -111,6 +116,7 @@ class UpdatePortfolioStock(PortfolioStockBase):
             "example": {
                 "portfolio_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                 "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                "asset_name": "Apple Inc.",
                 "quantity": 10,
                 "purchase_date": "2023-07-12T15:30:00",
                 "purchase_price": 2.3,
@@ -131,26 +137,12 @@ class UpdatePortfolioStockResponse(PortfolioStockResponseBase):
                     "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "portfolio_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
                     "asset_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
+                    "asset_name": "Apple Inc.",
                     "quantity": 10,
                     "purchase_date": "2023-07-12T15:30:00",
                     "purchase_price": 2.3,
                     "total_investment": 230.0,
                 },
-            }
-        }
-
-
-class DeletePortfolioStock(PortfolioStockBase):
-    """
-    PortfolioStock delete schema. Properties to receive via API on delete
-    """
-
-    portfolio_stock_id: str = Field(...)
-
-    class Config:
-        schema_extra = {
-            "example": {
-                "portfolio_stock_id": "8a648c97-faae-44ee-bb57-3ece478fe263",
             }
         }
 
