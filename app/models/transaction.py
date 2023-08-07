@@ -44,9 +44,9 @@ class Transaction(Base):
         index=True,
     )
 
-    portfolio_stock_id: str = Column(
+    portfolio_id: str = Column(
         UUID(as_uuid=True),
-        ForeignKey("portfolio_stock.portfolio_stock_id"),
+        ForeignKey("portfolio.portfolio_id"),
         nullable=False,
     )
 
