@@ -75,15 +75,14 @@ class Assets(Base):
         )
 
     @classmethod
-    def get_by_name(cls, db: Session, name: str, exchange: Exchange):
+    def get_by_name(cls, db: Session, name: str):
         """
-        Gets all historical market data from database based on given name and asset type.
+        Gets all historical market data from database based on given name.
         """
 
         return (
             db.query(Assets)
             .where(Assets.deleted_at == None)
             .filter(Assets.name == name)
-            .filter(Assets.exchange == exchange)
             .first()
         )

@@ -33,8 +33,8 @@ class CRUDAssets(BaseModel):
         return Assets.get_by_asset_id(db, asset_id)
 
     @staticmethod
-    def get_by_name(db: Session, name: str, exchange: Exchange):
-        return Assets.get_by_name(db, name, exchange)
+    def get_by_name(db: Session, name: str):
+        return Assets.get_by_name(db, name)
 
     @staticmethod
     def get_by_symbol(db: Session, symbol: str, exchange: Exchange):

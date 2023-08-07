@@ -83,7 +83,7 @@ async def get_asset(
                 )
             details = crud.assets.get_by_asset_id(db, asset_id)
         elif name != None:
-            details = crud.assets.get_by_name(db, name, exchange)
+            details = crud.assets.get_by_name(db, name)
         elif symbol != None:
             details = crud.assets.get_by_symbol(db, symbol, exchange)
         else:
