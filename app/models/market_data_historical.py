@@ -3,13 +3,13 @@ Market Data Historical models module
 """
 import uuid
 
-from sqlalchemy import Column, DateTime, ForeignKey, Float, Identity, Integer
+from sqlalchemy import Column, DateTime, Float, ForeignKey, Identity, Integer
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Session
 
-# from sqlalchemy.orm import relationship
-
 from app.models import Base
+
+# from sqlalchemy.orm import relationship
 
 
 class MarketDataHistorical(Base):

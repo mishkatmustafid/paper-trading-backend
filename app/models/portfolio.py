@@ -4,13 +4,13 @@ Portfolio models module
 
 import uuid
 
-from sqlalchemy import Column, ForeignKey, Identity, Integer, String, Float
+from sqlalchemy import Column, Float, ForeignKey, Identity, Integer, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Session
 
-# from sqlalchemy.orm import relationship
-
 from app.models import Base
+
+# from sqlalchemy.orm import relationship
 
 
 class Portfolio(Base):

@@ -10,12 +10,12 @@ from sqlalchemy import Column, DateTime, Enum, Float, ForeignKey, Identity, Inte
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Session
 
-# from sqlalchemy.orm import relationship
-
 from app.models import Base
 from app.models.order_type import OrderType
-from app.models.transaction_type import TransactionType
 from app.models.transaction_status import TransactionStatus
+from app.models.transaction_type import TransactionType
+
+# from sqlalchemy.orm import relationship
 
 
 class Transaction(Base):

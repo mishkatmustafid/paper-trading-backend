@@ -9,7 +9,6 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Session
 
 from app.models import Base
-
 from app.models.profile_status import ProfileStatus
 
 

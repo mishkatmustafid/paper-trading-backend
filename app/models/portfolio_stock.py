@@ -9,9 +9,9 @@ from sqlalchemy import Column, DateTime, ForeignKey, Identity, Integer, Numeric,
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Session
 
-# from sqlalchemy.orm import relationship
-
 from app.models import Base
+
+# from sqlalchemy.orm import relationship
 
 
 class PortfolioStock(Base):

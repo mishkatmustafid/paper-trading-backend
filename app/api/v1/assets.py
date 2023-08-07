@@ -4,6 +4,7 @@ related to recent information of symbols
 """
 
 from typing import Any, Optional
+
 from fastapi import APIRouter, Depends, Request, Response
 from fastapi.encoders import jsonable_encoder
 from loguru import logger
@@ -15,9 +16,9 @@ from app.db.session import db_connection
 from app.schemas import (
     CreateAsset,
     CreateAssetResponse,
-    GetPriceResponse,
     DeleteAsset,
     DeleteAssetResponse,
+    GetPriceResponse,
 )
 from app.utils.exceptions import InvalidUUIDError
 from app.utils.general import General
