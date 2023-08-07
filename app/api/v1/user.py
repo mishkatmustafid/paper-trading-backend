@@ -70,6 +70,7 @@ async def create_user(
             "status": True,
             "message": "Successfully created the user!",
             "details": {
+                "user_id": user_details["user_id"],
                 "full_name": user_details["full_name"],
                 "email": user_details["email"],
                 "access_token": access_token,
