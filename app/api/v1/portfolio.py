@@ -105,9 +105,18 @@ async def get_portfolio(
                     "Invalid UUID format for portfolio uuid",
                     status_code=400,
                 )
+
             if portfolio := General.exclude_metadata(
                 jsonable_encoder(crud.portfolio.get_by_portfolio_id(db, portfolio_id))
             ):
+                portfolio_stocks_details = []
+                if portfolio_stocks := General.exclude_metadata(
+                    jsonable_encoder(
+                        crud.portfolio_stock.get_by_portfolio_id(db, portfolio_id)
+                    )
+                ):
+                    portfolio_stocks_details = portfolio_stocks
+
                 return {
                     "status": True,
                     "message": "Portfolio Found!",
@@ -115,20 +124,46 @@ async def get_portfolio(
                         "portfolio_id": portfolio["portfolio_id"],
                         "user_id": user_id,
                         "name": portfolio["name"],
+                        "portfolio_stocks": portfolio_stocks_details,
                     },
                 }
+
             return {"status": False, "message": "Portfolio Not Found!"}
+
         if portfolios := General.exclude_metadata(
             jsonable_encoder(crud.portfolio.get_by_user_id(db, user_id))
         ):
+            portfolio_details = []
+
+            for portfolio in portfolios:
+                portfolio_stock_details = []
+
+                if portfolio_stocks := General.exclude_metadata(
+                    jsonable_encoder(
+                        crud.portfolio_stock.get_by_portfolio_id(
+                            db, portfolio["portfolio_id"]
+                        )
+                    )
+                ):
+                    portfolio_stock_details = portfolio_stocks
+
+                portfolio_details.append(
+                    {
+                        "portfolio_id": portfolio["portfolio_id"],
+                        "user_id": user_id,
+                        "name": portfolio["name"],
+                        "portfolio_stocks": portfolio_stock_details,
+                    }
+                )
+
             return {
                 "status": True,
                 "message": "All Portfolios Found!",
-                "details": portfolios,
+                "details": portfolio_details,
             }
         return {
             "status": False,
-            "message": "Portfolio Not Found!",
+            "message": "No Portfolios Found!",
         }
 
     except Exception as err:
@@ -210,6 +245,16 @@ async def delete_portfolio(
             )
         portfolio = crud.portfolio.get_by_portfolio_id(db, payload.portfolio_id)
         if portfolio:
+            if portfolio_stocks := General.exclude_metadata(
+                jsonable_encoder(
+                    crud.portfolio_stock.get_by_portfolio_id(db, payload.portfolio_id)
+                )
+            ):
+                for portfolio_stock in portfolio_stocks:
+                    crud.portfolio_stock.delete(
+                        db, portfolio_stock["portfolio_stock_id"]
+                    )
+
             if portfolio := crud.portfolio.delete(db, payload.portfolio_id):
                 return {
                     "status": True,
