@@ -235,3 +235,57 @@ async def delete_portfolio_stock(
     except Exception as err:
         logger.error(err)
         return handle_error.send_error(err, response)
+
+
+@router.get(
+    "/user/{user_id}",
+    dependencies=[Depends(JWTBearer())],
+    response_model=GetPortfolioStockResponse,
+    response_model_exclude_unset=True,
+)
+async def get_all_portfolio_stocks(
+    user_id: str,
+    response: Response,
+    db: Session = Depends(db_connection),
+) -> Any:
+    """
+    Gets portfolio stocks' details for a user.
+    """
+    try:
+        if not is_valid_uuid(user_id):
+            raise InvalidUUIDError(
+                "Invalid UUID format for user uuid",
+                status_code=400,
+            )
+        if not crud.user.get_by_user_id(db, user_id):
+            raise InvalidUUIDError(
+                "Invalid user uuid",
+                status_code=400,
+            )
+        if portfolios := General.exclude_metadata(
+            jsonable_encoder(crud.portfolio.get_by_user_id(db, user_id))
+        ):
+            all_portfolio_stocks = []
+            for portfolio in portfolios:
+                if portfolio_stocks := General.exclude_metadata(
+                    jsonable_encoder(
+                        crud.portfolio_stock.get_by_portfolio_id(
+                            db, portfolio["portfolio_id"]
+                        )
+                    )
+                ):
+                    all_portfolio_stocks += portfolio_stocks
+                return {
+                    "status": True,
+                    "message": "All Portfolio Stocks Found!",
+                    "details": all_portfolio_stocks,
+                }
+        return {
+            "status": True,
+            "message": "No Portfolio Found!",
+            "details": {},
+        }
+
+    except Exception as err:
+        logger.error(err)
+        return handle_error.send_error(err, response)
