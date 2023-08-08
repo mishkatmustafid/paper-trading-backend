@@ -229,3 +229,57 @@ async def delete_transaction(
     except Exception as err:
         logger.error(err)
         return handle_error.send_error(err, response)
+
+
+@router.get(
+    "/user/{user_id}",
+    dependencies=[Depends(JWTBearer())],
+    response_model=GetTransactionResponse,
+    response_model_exclude_unset=True,
+)
+async def get_all_transactions(
+    user_id: str,
+    response: Response,
+    db: Session = Depends(db_connection),
+) -> Any:
+    """
+    Gets all transactions' details for a user.
+    """
+    try:
+        if not is_valid_uuid(user_id):
+            raise InvalidUUIDError(
+                "Invalid UUID format for user uuid",
+                status_code=400,
+            )
+        if not crud.user.get_by_user_id(db, user_id):
+            raise InvalidUUIDError(
+                "Invalid user uuid",
+                status_code=400,
+            )
+        if portfolios := General.exclude_metadata(
+            jsonable_encoder(crud.portfolio.get_by_user_id(db, user_id))
+        ):
+            all_transactions = []
+            for portfolio in portfolios:
+                if transactions := General.exclude_metadata(
+                    jsonable_encoder(
+                        crud.transaction.get_by_portfolio_id(
+                            db, portfolio["portfolio_id"]
+                        )
+                    )
+                ):
+                    all_transactions += transactions
+                return {
+                    "status": True,
+                    "message": "All Transactions Found!",
+                    "details": all_transactions,
+                }
+        return {
+            "status": True,
+            "message": "No Portfolio Found!",
+            "details": {},
+        }
+
+    except Exception as err:
+        logger.error(err)
+        return handle_error.send_error(err, response)
