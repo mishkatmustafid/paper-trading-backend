@@ -1,7 +1,7 @@
 """
 Portfolio schema module
 """
-from typing import Any, Optional
+from typing import Dict, List, Optional
 
 from pydantic import BaseModel, Field
 
@@ -22,7 +22,7 @@ class PortfolioResponseBase(BaseModel):
 
 
 class GetPortfolioResponse(PortfolioResponseBase):
-    details: Optional[Any] = None
+    details: Optional[Dict | List[Dict]] = None
 
     class Config:
         orm_mode = True
