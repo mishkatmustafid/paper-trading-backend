@@ -268,6 +268,14 @@ async def get_all_transactions(
                         )
                     )
                 ):
+                    for transaction in transactions:
+                        transaction["portfolio_name"] = portfolio["name"]
+                        asset = General.exclude_metadata(
+                            jsonable_encoder(
+                                crud.assets.get_by_asset_id(db, transaction["asset_id"])
+                            )
+                        )
+                        transaction["asset_name"] = asset["name"]
                     all_transactions += transactions
                 return {
                     "status": True,
