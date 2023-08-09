@@ -123,7 +123,7 @@ async def get_portfolio_stock(
         ):
             return {
                 "status": True,
-                "message": "All Portfolios Found!",
+                "message": "All Portfolio Stocks Found!",
                 "details": portfolio_stocks,
             }
         return {
@@ -274,6 +274,8 @@ async def get_all_portfolio_stocks(
                         )
                     )
                 ):
+                    for portfolio_stock in portfolio_stocks:
+                        portfolio_stock["portfolio_name"] = portfolio["name"]
                     all_portfolio_stocks += portfolio_stocks
                 return {
                     "status": True,
