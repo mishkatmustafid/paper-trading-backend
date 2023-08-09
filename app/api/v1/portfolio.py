@@ -3,7 +3,7 @@ Portfolio module. This module contains handlers related
 to portfolio create, read, update and delete.
 """
 
-from typing import Any, Optional
+from typing import Any, Dict, List, Optional
 
 from fastapi import APIRouter, Depends, Response
 from fastapi.encoders import jsonable_encoder
@@ -77,6 +77,21 @@ async def create_portfolio(
         return handle_error.send_error(err, response)
 
 
+def merge_portfolio_stocks(portfolio_stocks: List[Dict]) -> List[Dict]:
+    merged_portfolio_stocks = {}
+
+    for stock in portfolio_stocks:
+        asset_id = stock["asset_id"]
+        if asset_id not in merged_portfolio_stocks:
+            merged_portfolio_stocks[asset_id] = stock.copy()
+        else:
+            merged_stock = merged_portfolio_stocks[asset_id]
+            merged_stock["quantity"] += stock["quantity"]
+            merged_stock["total_investment"] += stock["total_investment"]
+
+    return list(merged_portfolio_stocks.values())
+
+
 @router.get(
     "/{user_id}",
     dependencies=[Depends(JWTBearer())],
@@ -117,6 +132,10 @@ async def get_portfolio(
                 ):
                     portfolio_stocks_details = portfolio_stocks
 
+                portfolio_stocks_details = merge_portfolio_stocks(
+                    portfolio_stocks_details
+                )
+
                 return {
                     "status": True,
                     "message": "Portfolio Found!",
@@ -136,7 +155,7 @@ async def get_portfolio(
             portfolio_details = []
 
             for portfolio in portfolios:
-                portfolio_stock_details = []
+                portfolio_stocks_details = []
 
                 if portfolio_stocks := General.exclude_metadata(
                     jsonable_encoder(
@@ -145,14 +164,18 @@ async def get_portfolio(
                         )
                     )
                 ):
-                    portfolio_stock_details = portfolio_stocks
+                    portfolio_stocks_details += portfolio_stocks
+
+                portfolio_stocks_details = merge_portfolio_stocks(
+                    portfolio_stocks_details
+                )
 
                 portfolio_details.append(
                     {
                         "portfolio_id": portfolio["portfolio_id"],
                         "user_id": user_id,
                         "name": portfolio["name"],
-                        "portfolio_stocks": portfolio_stock_details,
+                        "portfolio_stocks": portfolio_stocks_details,
                     }
                 )
 
@@ -254,6 +277,14 @@ async def delete_portfolio(
                     crud.portfolio_stock.delete(
                         db, portfolio_stock["portfolio_stock_id"]
                     )
+
+            # if transactions := General.exclude_metadata(
+            #     jsonable_encoder(
+            #         crud.transaction.get_by_portfolio_id(db, payload.portfolio_id)
+            #     )
+            # ):
+            #     for transaction in transactions:
+            #         crud.transaction.delete(db, transaction["transaction_id"])
 
             if portfolio := crud.portfolio.delete(db, payload.portfolio_id):
                 return {
